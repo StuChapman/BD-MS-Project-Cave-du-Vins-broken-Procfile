@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Cave du Vins</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="static/css/one-page-wonder.css" rel="stylesheet">
+
+  <!-- Fontawesome fonts -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Cave du Vins</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Sign Up</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Log In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#browse">Browse Wines</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Add Wine</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="masthead text-center">
+    <div class="masthead-content">
+      <div class="container">
+        <h1 class="masthead-heading mb-0">Cave du Vins</h1>
+        <h2 class="masthead-subheading mb-0">An online cellar of fine wine</h2>
+        <a href="#browse" class="btn btn-yellow btn-xl rounded-pill mt-5">Browse Wines</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Browse Section -->
+  <section id="browse">
+
+    <h3 class="masthead-subheading text-center mt-5 mb-5">browse wines</h3>
+
+    <div class="search ml-auto mr-auto">
+        <form action="{{ url_for('get_tasks') }}" method="post" class="searchform">
+            <div class="">
+                <div class="">
+                    <label for="name">Wine Name</label>
+                    <br>
+                    <input type="text" name="name" id="name" minlength="3" class="searchitem" required>
+                </div>
+                <div class="searchvintage">
+                    <label for="vintage">Vintage</label>
+                    <br>
+                    <input type="text" name="vintage" id="vintage" minlength="3" class="searchitem" required>
+                </div>
+                <div class="searchcolour">
+                    <label for="colour">Colour</label>
+                    <br>
+                    <select name="colour" id="colour" class="searchitem">
+                        {% for task in tasks %}
+                        <option value="{{ task.task_name }}">{{ task.task_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="searchcountry">
+                    <label for="country">Country</label>
+                    <br>
+                    <input type="text" name="country" id="country" minlength="3" class="searchitem" required>
+                </div>
+                <div class="searchregion">
+                    <label for="region">Region</label>
+                    <br>
+                    <input type="text" name="region" id="region" minlength="3" class="searchitem" required>
+                </div>
+                <div class="">
+                    <a href="#" class="red btn text-shadow">Reset</a>
+                    <button type="submit" class="light-blue darken-1 btn text-shadow">
+                        <i class="fas fa-search left"></i> Search
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <div class="p-5">
+            <img class="img-fluid rounded-circle" src="static/img/02.jpg" alt="">
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="p-5">
+            <h2 class="display-4">We salute you!</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 order-lg-2">
+          <div class="p-5">
+            <img class="img-fluid rounded-circle" src="static/img/03.jpg" alt="">
+          </div>
+        </div>
+        <div class="col-lg-6 order-lg-1">
+          <div class="p-5">
+            <h2 class="display-4">Let there be rock!</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-5 bg-black">
+    <div class="container">
+      <p class="m-0 text-center text-white small">Copyright &copy; Your Website 2020</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="static/vendor/jquery/jquery.min.js"></script>
+  <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
