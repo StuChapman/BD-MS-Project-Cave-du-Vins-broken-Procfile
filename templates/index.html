@@ -19,6 +19,7 @@
 
   <!-- Custom styles for this template -->
   <link href="static/css/one-page-wonder.css" rel="stylesheet">
+  <link href="static/css/style.css" rel="stylesheet">
 
   <!-- Fontawesome fonts -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
@@ -55,11 +56,11 @@
   </nav>
 
   <!-- Header -->
-  <header class="masthead text-center">
-    <div class="masthead-content">
+  <header class="hero text-center">
+    <div class="hero-content">
       <div class="container">
-        <h1 class="masthead-heading mb-0">Cave du Vins</h1>
-        <h2 class="masthead-subheading mb-0">An online cellar of fine wine</h2>
+        <h1 class="hero-heading mb-0">Cave du Vins</h1>
+        <h2 class="hero-subheading mb-0">An online cellar of fine wine</h2>
         <a href="#browse" class="btn btn-yellow btn-xl rounded-pill mt-5">Browse Wines</a>
       </div>
     </div>
@@ -71,7 +72,7 @@
     <h3 class="masthead-subheading text-center mt-5 mb-5">browse wines</h3>
 
     <div class="search ml-auto mr-auto">
-        <form action="{{ url_for('get_tasks') }}" method="post" class="searchform">
+        <form action="{{ url_for('populate_search') }}" method="post" class="searchform">
             <div class="">
                 <div class="">
                     <label for="name">Wine Name</label>
@@ -87,20 +88,28 @@
                     <label for="colour">Colour</label>
                     <br>
                     <select name="colour" id="colour" class="searchitem">
-                        {% for task in tasks %}
-                        <option value="{{ task.task_name }}">{{ task.task_name }}</option>
+                        {% for document in colours %}
+                        <option value="{{ document.colour }}">{{ document.colour }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="searchcountry">
                     <label for="country">Country</label>
                     <br>
-                    <input type="text" name="country" id="country" minlength="3" class="searchitem" required>
+                    <select name="country" id="country" class="searchitem">
+                        {% for document in country %}
+                        <option value="{{ document.country }}">{{ document.country }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="searchregion">
                     <label for="region">Region</label>
                     <br>
-                    <input type="text" name="region" id="region" minlength="3" class="searchitem" required>
+                    <select name="region" id="region" class="searchitem">
+                        {% for document in region %}
+                        <option value="{{ document.region }}">{{ document.region }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="">
                     <a href="#" class="red btn text-shadow">Reset</a>

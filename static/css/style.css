@@ -1,0 +1,54 @@
+
+.btn-yellow {
+    background-color: #FFD374;
+}
+
+header.hero {
+  position: relative;
+  overflow: hidden;
+  padding-top: calc(7rem + 72px);
+  padding-bottom: 7rem;
+  background-image: url(/static/img/IMG_4723sml.JPG);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: scroll;
+  background-size: cover;
+}
+
+header.hero .hero-content {
+  z-index: 1;
+  position: relative;
+  color: #2E9693;
+}
+
+header.hero .hero-content .hero-heading {
+  font-size: 4rem;
+}
+
+header.hero .hero-content .hero-subheading {
+  font-size: 2rem;
+}
+
+.search {
+    width: 75vw;
+}
+
+.searchitem {
+    width: 100%;
+}
+
+.searchitem {
+    height: 2rem;
+}
+
+@media (min-width: 992px) {
+    .search {
+        width: 33vw;
+    }
+    header.hero .hero-content .hero-heading {
+    font-size: 7rem;
+    }
+    header.hero .hero-content .hero-subheading {
+    font-size: 4rem;
+    }
+}
