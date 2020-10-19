@@ -25,6 +25,11 @@ def filter_region():
     return render_template("index.html", region=mongo.db.region.find("country: France"))
 
 
+@app.route('/search')
+def search():
+    return render_template("index.html", results=mongo.db.colours.find())
+
+
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
             port=int(os.environ.get('PORT')),
