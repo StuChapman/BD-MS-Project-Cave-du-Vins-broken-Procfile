@@ -8,17 +8,27 @@ header.hero {
   overflow: hidden;
   padding-top: calc(7rem + 72px);
   padding-bottom: 7rem;
-  background-image: url(/static/img/IMG_4723sml.JPG);
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: scroll;
-  background-size: cover;
+}
+
+.hero::before { /* Credit: https://coder-coder.com/background-image-opacity/ */
+    content: "";
+    background-image: url(/static/img/IMG_4723sml.JPG);
+    background-size: cover;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: scroll;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.75;
 }
 
 header.hero .hero-content {
   z-index: 1;
   position: relative;
-  color: #2E9693;
+  color: rgba(0, 0, 0, 0.8);
 }
 
 header.hero .hero-content .hero-heading {
