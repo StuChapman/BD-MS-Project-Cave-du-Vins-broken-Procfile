@@ -1,8 +1,14 @@
 
+/* General styling */
 .btn-yellow {
     background-color: #FFD374;
 }
 
+a {
+    color: black;
+}
+
+/* Headers Section styling */
 header.hero {
   position: relative;
   overflow: hidden;
@@ -39,6 +45,8 @@ header.hero .hero-content .hero-subheading {
   font-size: 2rem;
 }
 
+
+/* Browse Section styling */
 .search {
     width: 75vw;
 }
@@ -51,6 +59,8 @@ header.hero .hero-content .hero-subheading {
     height: 2rem;
 }
 
+
+/* Large Media Device styling */
 @media (min-width: 992px) {
     .search {
         width: 33vw;

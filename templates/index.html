@@ -72,9 +72,9 @@
     <h3 class="masthead-subheading text-center pt-5 mb-5">browse wines</h3>
 
     <div class="search ml-auto mr-auto">
-        <form action="{{ url_for('populate_search') }}" method="post" class="searchform">
-            <div class="">
-                <div class="">
+        <form action="{{ url_for('search') }}" method="post" class="searchform">
+            <div>
+                <div>
                     <label for="name">Wine Name</label>
                     <br>
                     <input type="text" name="name" id="name" minlength="3" class="searchitem">
@@ -88,6 +88,7 @@
                     <label for="colour">Colour</label>
                     <br>
                     <select name="colour" id="colour" class="searchitem">
+                        <option value="select">select from the list ...</option>
                         {% for document in colours %}
                         <option value="{{ document.colour }}">{{ document.colour }}</option>
                         {% endfor %}
@@ -97,6 +98,7 @@
                     <label for="country">Country</label>
                     <br>
                     <select name="country" id="country" class="searchitem">
+                        <option value="select">select from the list ...</option>
                         {% for document in country %}
                         <option value="{{ document.country }}">{{ document.country }}</option>
                         {% endfor %}
@@ -106,29 +108,39 @@
                     <label for="region">Region</label>
                     <br>
                     <select name="region" id="region" class="searchitem">
+                        <option value="select">select from the list ...</option>
                         {% for document in region %}
                         <option value="{{ document.region }}">{{ document.region }}</option>
                         {% endfor %}
                     </select>
                 </div>
             </div>
-        </form>
-        <div class="row">
             <button type="submit" 
                 class="btn btn-yellow btn-xl rounded-pill mt-5 ml-auto mr-auto"> 
-                <a href="{{ url_for('search') }}" >
-                <i class="fas fa-search"></i> Search</a>
+                <i class="fas fa-search"></i> Search
+            </button>
+        </form>
+        <div class="row">
+            <button type="reset" 
+                class="btn btn-xl rounded-pill mt-5 ml-auto mr-auto"> 
+                <a href="{{ url_for('populate_search') }}" >
+                <i class=""></i> Reset</a>
             </button>
         </div>
     </div>
   </section>
 
   <!-- Results Section -->
-  <section>
+  <section id="results">
     <div class="container">
         <h2 class="">results</h2>
         {% for document in results %}
-        <h2 class="">{{ document.colour }}</h2>
+        <h2 class="">{{ document.wine_name }}</h2>
+        <h3 class="">{{ document.vintage }}</h3>
+        <h3 class="">{{ document.colour }}</h3>
+        <h3 class="">{{ document.country }}</h3>
+        <h3 class="">{{ document.region }}</h3>
+        <h3 class="">{{ coloursearch }}</h3>
         {% endfor %}
     </div>
   </section>
@@ -154,7 +166,7 @@
   <!-- Footer -->
   <footer class="py-5 bg-black">
     <div class="container">
-      <p class="m-0 text-center text-white small">Copyright &copy; Your Website 2020</p>
+      <p class="m-0 text-center text-white small">Copyright &copy; Cave Du Vins 2020</p>
     </div>
     <!-- /.container -->
   </footer>
