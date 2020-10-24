@@ -4,11 +4,23 @@
     background-color: #FFD374;
 }
 
+.btn-blue {
+    background-color: #2E9693;
+}
+
+.btn-large {
+    width: 15rem;
+}
+
+.btn-medium {
+    width: 12.5rem;
+}
+
 a {
     color: black;
 }
 
-/* Headers Section styling */
+/* Header Section styling */
 header.hero {
   position: relative;
   overflow: hidden;

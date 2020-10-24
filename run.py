@@ -20,15 +20,12 @@ def populate_search():
     return render_template("index.html", colours=mongo.db.colours.find(), country=mongo.db.country.find(), region=mongo.db.region.find())
 
 
-@app.route('/filter_region')
-def filter_region():
-    return render_template("index.html", region=mongo.db.region.find("country: France"))
-
-
 @app.route("/search", methods=["GET", "POST"])
 def search():
     coloursearch = request.values.get("colour")
-    return render_template("index.html", results=mongo.db.wines.find({"colour": coloursearch}))
+    countrysearch = request.values.get("country")
+    regionsearch = request.values.get("region")
+    return render_template("index.html", results=mongo.db.wines.find( {"$and": [ {"colour": coloursearch}, {"country": countrysearch} , {"region": regionsearch} ] }))
 
 
 if __name__ == '__main__':

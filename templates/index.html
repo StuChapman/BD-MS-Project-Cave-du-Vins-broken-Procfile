@@ -61,7 +61,7 @@
       <div class="container">
         <h1 class="hero-heading mb-0">Cave du Vins</h1>
         <h2 class="hero-subheading mb-0">An online cellar of fine wine</h2>
-        <a href="#browse" class="btn btn-yellow btn-xl rounded-pill mt-5">Browse Wines</a>
+        <a href="#browse" class="btn btn-yellow btn-large btn-xl rounded-pill mt-5">Browse Wines</a>
       </div>
     </div>
   </header>
@@ -69,7 +69,7 @@
   <!-- Browse Section -->
   <section id="browse">
 
-    <h3 class="masthead-subheading text-center pt-5 mb-5">browse wines</h3>
+    <h3 class="text-center pt-5 mb-5">browse wines</h3>
 
     <div class="search ml-auto mr-auto">
         <form action="{{ url_for('search') }}" method="post" class="searchform">
@@ -115,32 +115,36 @@
                     </select>
                 </div>
             </div>
-            <button type="submit" 
-                class="btn btn-yellow btn-xl rounded-pill mt-5 ml-auto mr-auto"> 
-                <i class="fas fa-search"></i> Search
-            </button>
+            <div class="row">
+                <button type="submit" 
+                    class="btn btn-yellow btn-medium btn-xl rounded-pill mt-5 ml-auto mr-auto"> 
+                    <i class="fas fa-search"></i> Search
+                </button>
+                <button type="reset" 
+                    class="btn btn-blue btn-medium btn-xl rounded-pill mt-5 ml-auto mr-auto"> 
+                    <a href="{{ url_for('populate_search') }}" >
+                    <i class=""></i> Reset</a>
+                </button>
+            </div>
         </form>
-        <div class="row">
-            <button type="reset" 
-                class="btn btn-xl rounded-pill mt-5 ml-auto mr-auto"> 
-                <a href="{{ url_for('populate_search') }}" >
-                <i class=""></i> Reset</a>
-            </button>
-        </div>
     </div>
   </section>
 
   <!-- Results Section -->
   <section id="results">
-    <div class="container">
-        <h2 class="">results</h2>
+    <div class="container text-center mt-5 pt-5">
+        <h3 class="">results</h3>
+        <br>
         {% for document in results %}
-        <h2 class="">{{ document.wine_name }}</h2>
-        <h3 class="">{{ document.vintage }}</h3>
-        <h3 class="">{{ document.colour }}</h3>
-        <h3 class="">{{ document.country }}</h3>
-        <h3 class="">{{ document.region }}</h3>
-        <h3 class="">{{ coloursearch }}</h3>
+        <div class="">
+            <h2 class="">{{ document.wine_name }}</h2>
+            <h3 class="">{{ document.vintage }}</h3>
+            <h3 class="">{{ document.colour }}</h3>
+            <h3 class="">{{ document.country }}</h3>
+            <h3 class="">{{ document.region }}</h3>
+            <h3 class="">{{ coloursearch }}</h3>
+            <br>
+        </div>
         {% endfor %}
     </div>
   </section>
