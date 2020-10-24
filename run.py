@@ -27,8 +27,7 @@ def search():
     coloursearch = request.values.get("colour")
     countrysearch = request.values.get("country")
     regionsearch = request.values.get("region")
-    return render_template("index.html", results=mongo.db.wines.find( { "wine_name": namesearch } ))
-    # return render_template("index.html", results=mongo.db.wines.find( {"$and": [ {"wine_name": namesearch}, {"vintage": vintagesearch}, {"colour": coloursearch}, {"country": countrysearch} , {"region": regionsearch} ] }))
+    return render_template("index.html", results=mongo.db.wines.find( {"$and": [ {"wine_name": namesearch}, {"vintage": vintagesearch}, {"colour": coloursearch}, {"country": countrysearch} , {"region": regionsearch} ] }))
 
 
 if __name__ == '__main__':
