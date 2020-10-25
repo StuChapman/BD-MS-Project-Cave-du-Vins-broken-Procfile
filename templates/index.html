@@ -29,45 +29,45 @@
 
 <body>
 
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Cave du Vins</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="#">Sign Up</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Log In</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#browse">Browse Wines</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Add Wine</a>
-          </li>
-        </ul>
-      </div>
+        <a class="navbar-brand" href="#">Cave du Vins</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#signupmodal">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">Log In</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#browse">Browse Wines</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link disabled" href="#">Add Wine</a>
+                </li>
+            </ul>
+        </div>
     </div>
-  </nav>
+</nav>
 
-  <!-- Header -->
-  <header class="hero text-center">
+<!-- Header -->
+<header class="hero text-center">
     <div class="hero-content">
-      <div class="container">
-        <h1 class="hero-heading mb-0">Cave du Vins</h1>
-        <h2 class="hero-subheading mb-0">An online cellar of fine wine</h2>
-        <a href="#browse" class="btn btn-yellow btn-large btn-xl rounded-pill mt-5">Browse Wines</a>
-      </div>
+        <div class="container">
+            <h1 class="hero-heading mb-0">Cave du Vins</h1>
+            <h2 class="hero-subheading mb-0">An online cellar of fine wine</h2>
+            <a href="#browse" class="btn btn-yellow btn-large btn-xl rounded-pill mt-5">Browse Wines</a>
+        </div>
     </div>
-  </header>
+</header>
 
-  <!-- Browse Section -->
-  <section id="browse">
+<!-- Browse Section -->
+<section id="browse">
 
     <h3 class="text-center pt-5 mb-5">browse wines</h3>
 
@@ -88,7 +88,7 @@
                     <label for="colour">Colour</label>
                     <br>
                     <select name="colour" id="colour" class="searchitem">
-                        <option value="select">select from the list ...</option>
+                        <option value="select"></option>
                         {% for document in colours %}
                         <option value="{{ document.colour }}">{{ document.colour }}</option>
                         {% endfor %}
@@ -98,7 +98,7 @@
                     <label for="country">Country</label>
                     <br>
                     <select name="country" id="country" class="searchitem">
-                        <option value="select">select from the list ...</option>
+                        <option value="select"></option>
                         {% for document in country %}
                         <option value="{{ document.country }}">{{ document.country }}</option>
                         {% endfor %}
@@ -108,7 +108,7 @@
                     <label for="region">Region</label>
                     <br>
                     <select name="region" id="region" class="searchitem">
-                        <option value="select">select from the list ...</option>
+                        <option value="select"></option>
                         {% for document in region %}
                         <option value="{{ document.region }}">{{ document.region }}</option>
                         {% endfor %}
@@ -128,10 +128,10 @@
             </div>
         </form>
     </div>
-  </section>
+</section>
 
-  <!-- Results Section -->
-  <section id="results">
+<!-- Results Section -->
+<section id="results">
     <div class="container text-center mt-5 pt-5">
         <h3 class="">results</h3>
         <br>
@@ -147,7 +147,36 @@
         </div>
         {% endfor %}
     </div>
-  </section>
+</section>
+
+<!-- Sign Up Modal -->
+    <div class="modal" id="signupmodal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Sign up</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ url_for('add_user') }}" method="post" class="signup">
+                        <label for="name">Enter a username</label>
+                        <br>
+                        <input type="text" name="username" id="username" minlength="3" class="signup">
+                        <br>
+                        <label for="name">Enter a password</label>
+                        <br>
+                        <input type="text" name="password" id="password" minlength="3" class="signup">
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-yellow" name="action">Submit</button>
+                            <button type="button" class="btn btn-blue" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
   <section>
     <div class="container">
