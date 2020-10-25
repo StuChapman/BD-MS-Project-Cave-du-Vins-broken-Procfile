@@ -40,6 +40,14 @@ def add_user():
     users.insert_one({"username": usernameinput, "password": passwordinput})
     return redirect(url_for('populate_search'))
 
+
+@app.route("/log_in", methods=["GET", "POST"])
+def log_in():
+    usernamefind = request.values.get("usernamelog")
+    passwordfind = request.values.get("passwordlog")
+    return render_template("index.html", logintest = mongo.db.users.find({"username": usernamefind, "password": passwordfind}))
+
+
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
             port=int(os.environ.get('PORT')),

@@ -32,7 +32,9 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">Cave du Vins</a>
+        {% for document in logintest %}
+            <a class="navbar-brand" href="#">user: {{ document.username }}</a>
+        {% endfor %}
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -42,7 +44,7 @@
                 <a class="nav-link" href="#" data-toggle="modal" data-target="#signupmodal">Sign Up</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#">Log In</a>
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#loginmodal">Log In</a>
                 </li>
                 <li class="nav-item">
                 <a class="nav-link" href="#browse">Browse Wines</a>
@@ -161,15 +163,44 @@
                 </div>
                 <div class="modal-body">
                     <form action="{{ url_for('add_user') }}" method="post" class="signup">
-                        <label for="name">Enter a username</label>
+                        <label for="username">Enter a username</label>
                         <br>
                         <input type="text" name="username" id="username" minlength="3" class="signup">
                         <br>
-                        <label for="name">Enter a password</label>
+                        <label for="password">Enter a password</label>
                         <br>
                         <input type="text" name="password" id="password" minlength="3" class="signup">
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-yellow" name="action">Submit</button>
+                            <button type="button" class="btn btn-blue" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Log In Modal -->
+    <div class="modal" id="loginmodal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Log In</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ url_for('log_in') }}" method="post" class="login">
+                        <label for="usernamelog">Enter a username</label>
+                        <br>
+                        <input type="text" name="usernamelog" id="usernamelog" minlength="3" class="login">
+                        <br>
+                        <label for="passwordlog">Enter a password</label>
+                        <br>
+                        <input type="text" name="passwordlog" id="passwordlog" minlength="3" class="login">
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-yellow" name="action">Log In</button>
                             <button type="button" class="btn btn-blue" data-dismiss="modal">Cancel</button>
                         </div>
                     </form>
