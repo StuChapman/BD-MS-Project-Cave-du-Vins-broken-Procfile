@@ -32,9 +32,13 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
     <div class="container">
-        {% for document in logintest %}
-            <a class="navbar-brand" href="#">user: {{ document.username }}</a>
-        {% endfor %}
+        {% if logintest %}
+            {% for document in logintest %}
+                <a class="navbar-brand" href="#">welcome: {{ document.username }}</a>
+            {% endfor %}
+        {% else %}
+            <a class="navbar-brand" href="#">Cave du Vins</a>
+        {% endif %}
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -44,13 +48,21 @@
                 <a class="nav-link" href="#" data-toggle="modal" data-target="#signupmodal">Sign Up</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#" data-toggle="modal" data-target="#loginmodal">Log In</a>
+                {% if logintest %}
+                    <a class="nav-link" href="#" data-target="">Log Out</a>
+                {% else %}
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#loginmodal">Log In</a>
+                {% endif %}
                 </li>
                 <li class="nav-item">
                 <a class="nav-link" href="#browse">Browse Wines</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link disabled" href="#">Add Wine</a>
+                {% if logintest %}
+                    <a class="nav-link" href="#">Add Wine</a>
+                {% else %}
+                    <a class="nav-link disabled" href="#">Add Wine</a>
+                {% endif %}
                 </li>
             </ul>
         </div>
