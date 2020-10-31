@@ -20,6 +20,24 @@ a {
     color: black;
 }
 
+/* Login Page Styling */
+.loginform {
+    width: 18rem;
+}
+
+.login {
+    width: 12rem;
+}
+
+.logintext {
+    font-family: 'Lato';
+    color: white;
+}
+
+.logintext a {
+    color: #FFD374;
+}
+
 /* Header Section styling */
 header.hero {
   position: relative;

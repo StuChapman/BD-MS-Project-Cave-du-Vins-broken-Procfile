@@ -18,8 +18,13 @@ mongo = PyMongo(app)
 @app.route('/')
 def index():
     if 'username' in session:
-        return 'You are logged in as ' + session['username']
+        user_name = 'You are logged in as ' + session['username']
+        return render_template('index.html', user_name = 'User: ' + session['username'])
+    return render_template('index.html')
 
+
+@app.route('/login_page')
+def login_page():
     return render_template('login.html')
 
 
@@ -35,6 +40,12 @@ def login():
             return redirect(url_for('index'))
 
     return 'Invalid username/password combination'
+
+# Credit: https://pythonbasics.org/flask-sessions/
+@app.route('/logout')
+def logout():
+   session.pop('username', None)
+   return redirect(url_for('index'))
 
 
 # Credit: https://edubanq.com/programming/mongodb/creating-a-user-login-system-using-python-flask-and-mongodb/

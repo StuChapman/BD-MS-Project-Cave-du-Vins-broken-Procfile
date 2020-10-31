@@ -29,215 +29,122 @@
 
 <body>
 
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
-    <div class="container">
-        {% if logintest %}
-            {% for document in logintest %}
-                <a class="navbar-brand" href="#">welcome: {{ document.username }}</a>
-            {% endfor %}
-        {% else %}
-            <a class="navbar-brand" href="#">Cave du Vins</a>
-        {% endif %}
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                <a class="nav-link" href="#" data-toggle="modal" data-target="#signupmodal">Sign Up</a>
-                </li>
-                <li class="nav-item">
-                {% if logintest %}
-                    <a class="nav-link" href="#" data-target="">Log Out</a>
-                {% else %}
-                    <a class="nav-link" href="#" data-toggle="modal" data-target="#loginmodal">Log In</a>
-                {% endif %}
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="#browse">Browse Wines</a>
-                </li>
-                <li class="nav-item">
-                {% if logintest %}
-                    <a class="nav-link" href="#">Add Wine</a>
-                {% else %}
-                    <a class="nav-link disabled" href="#">Add Wine</a>
-                {% endif %}
-                </li>
-            </ul>
+{% extends "layout.html" %}
+{% block body %}
+
+    <!-- Header -->
+    <header class="hero text-center">
+        <div class="hero-content">
+            <div class="container">
+                <h1 class="hero-heading mb-0">Cave du Vins</h1>
+                <h2 class="hero-subheading mb-0">An online cellar of fine wine</h2>
+                <a href="#browse" class="btn btn-yellow btn-large btn-xl rounded-pill mt-5">Browse Wines</a>
+            </div>
         </div>
-    </div>
-</nav>
+    </header>
 
-<!-- Header -->
-<header class="hero text-center">
-    <div class="hero-content">
-        <div class="container">
-            <h1 class="hero-heading mb-0">Cave du Vins</h1>
-            <h2 class="hero-subheading mb-0">An online cellar of fine wine</h2>
-            <a href="#browse" class="btn btn-yellow btn-large btn-xl rounded-pill mt-5">Browse Wines</a>
-        </div>
-    </div>
-</header>
+    <!-- Browse Section -->
+    <section id="browse">
 
-<!-- Browse Section -->
-<section id="browse">
+        <h3 class="text-center pt-5 mb-5">browse wines</h3>
 
-    <h3 class="text-center pt-5 mb-5">browse wines</h3>
-
-    <div class="search ml-auto mr-auto">
-        <form action="{{ url_for('search') }}" method="post" class="searchform">
-            <div>
+        <div class="search ml-auto mr-auto">
+            <form action="{{ url_for('search') }}" method="post" class="searchform">
                 <div>
-                    <label for="name">Wine Name</label>
-                    <br>
-                    <input type="text" name="name" id="name" minlength="3" class="searchitem">
+                    <div>
+                        <label for="name">Wine Name</label>
+                        <br>
+                        <input type="text" name="name" id="name" minlength="3" class="searchitem">
+                    </div>
+                    <div class="searchvintage">
+                        <label for="vintage">Vintage</label>
+                        <br>
+                        <input type="text" name="vintage" id="vintage" minlength="3" class="searchitem">
+                    </div>
+                    <div class="searchcolour">
+                        <label for="colour">Colour</label>
+                        <br>
+                        <select name="colour" id="colour" class="searchitem">
+                            <option value="select"></option>
+                            {% for document in colours %}
+                            <option value="{{ document.colour }}">{{ document.colour }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="searchcountry">
+                        <label for="country">Country</label>
+                        <br>
+                        <select name="country" id="country" class="searchitem">
+                            <option value="select"></option>
+                            {% for document in country %}
+                            <option value="{{ document.country }}">{{ document.country }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="searchregion">
+                        <label for="region">Region</label>
+                        <br>
+                        <select name="region" id="region" class="searchitem">
+                            <option value="select"></option>
+                            {% for document in region %}
+                            <option value="{{ document.region }}">{{ document.region }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
-                <div class="searchvintage">
-                    <label for="vintage">Vintage</label>
-                    <br>
-                    <input type="text" name="vintage" id="vintage" minlength="3" class="searchitem">
+                <div class="row">
+                    <button type="submit" 
+                        class="btn btn-yellow btn-medium btn-xl rounded-pill mt-5 ml-auto mr-auto"> 
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                    <button type="reset" 
+                        class="btn btn-blue btn-medium btn-xl rounded-pill mt-5 ml-auto mr-auto"> 
+                        <a href="{{ url_for('populate_search') }}" >
+                        <i class=""></i> Reset</a>
+                    </button>
                 </div>
-                <div class="searchcolour">
-                    <label for="colour">Colour</label>
-                    <br>
-                    <select name="colour" id="colour" class="searchitem">
-                        <option value="select"></option>
-                        {% for document in colours %}
-                        <option value="{{ document.colour }}">{{ document.colour }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="searchcountry">
-                    <label for="country">Country</label>
-                    <br>
-                    <select name="country" id="country" class="searchitem">
-                        <option value="select"></option>
-                        {% for document in country %}
-                        <option value="{{ document.country }}">{{ document.country }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="searchregion">
-                    <label for="region">Region</label>
-                    <br>
-                    <select name="region" id="region" class="searchitem">
-                        <option value="select"></option>
-                        {% for document in region %}
-                        <option value="{{ document.region }}">{{ document.region }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-            <div class="row">
-                <button type="submit" 
-                    class="btn btn-yellow btn-medium btn-xl rounded-pill mt-5 ml-auto mr-auto"> 
-                    <i class="fas fa-search"></i> Search
-                </button>
-                <button type="reset" 
-                    class="btn btn-blue btn-medium btn-xl rounded-pill mt-5 ml-auto mr-auto"> 
-                    <a href="{{ url_for('populate_search') }}" >
-                    <i class=""></i> Reset</a>
-                </button>
-            </div>
-        </form>
-    </div>
-</section>
+            </form>
+        </div>
+    </section>
 
-<!-- Results Section -->
-<section id="results">
-    <div class="container text-center mt-5 pt-5">
-        <h3 class="">results</h3>
-        <br>
-        {% for document in results %}
-        <div class="">
-            <h2 class="">{{ document.wine_name }}</h2>
-            <h3 class="">{{ document.vintage }}</h3>
-            <h3 class="">{{ document.colour }}</h3>
-            <h3 class="">{{ document.country }}</h3>
-            <h3 class="">{{ document.region }}</h3>
-            <h3 class="">{{ coloursearch }}</h3>
+    <!-- Results Section -->
+    <section id="results">
+        <div class="container text-center mt-5 pt-5">
+            <h3 class="">results</h3>
             <br>
+            {% for document in results %}
+            <div class="">
+                <h2 class="">{{ document.wine_name }}</h2>
+                <h3 class="">{{ document.vintage }}</h3>
+                <h3 class="">{{ document.colour }}</h3>
+                <h3 class="">{{ document.country }}</h3>
+                <h3 class="">{{ document.region }}</h3>
+                <h3 class="">{{ coloursearch }}</h3>
+                <br>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
-</section>
+    </section>
 
-<!-- Sign Up Modal -->
-    <div class="modal" id="signupmodal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Sign up</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ url_for('add_user') }}" method="post" class="signup">
-                        <label for="username">Enter a username</label>
-                        <br>
-                        <input type="text" name="username" id="username" minlength="3" class="signup">
-                        <br>
-                        <label for="password">Enter a password</label>
-                        <br>
-                        <input type="text" name="password" id="password" minlength="3" class="signup">
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-yellow" name="action">Submit</button>
-                            <button type="button" class="btn btn-blue" data-dismiss="modal">Cancel</button>
-                        </div>
-                    </form>
-                </div>
+    <section>
+        <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 order-lg-2">
+            <div class="p-5">
+                <img class="img-fluid rounded-circle" src="static/img/03.jpg" alt="">
+            </div>
+            </div>
+            <div class="col-lg-6 order-lg-1">
+            <div class="p-5">
+                <h2 class="display-4">Let there be rock!</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+            </div>
             </div>
         </div>
-    </div>
+        </div>
+    </section>
 
-<!-- Log In Modal -->
-    <div class="modal" id="loginmodal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Log In</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ url_for('log_in') }}" method="post" class="login">
-                        <label for="usernamelog">Enter a username</label>
-                        <br>
-                        <input type="text" name="usernamelog" id="usernamelog" minlength="3" class="login">
-                        <br>
-                        <label for="passwordlog">Enter a password</label>
-                        <br>
-                        <input type="text" name="passwordlog" id="passwordlog" minlength="3" class="login">
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-yellow" name="action">Log In</button>
-                            <button type="button" class="btn btn-blue" data-dismiss="modal">Cancel</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-  <section>
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-6 order-lg-2">
-          <div class="p-5">
-            <img class="img-fluid rounded-circle" src="static/img/03.jpg" alt="">
-          </div>
-        </div>
-        <div class="col-lg-6 order-lg-1">
-          <div class="p-5">
-            <h2 class="display-4">Let there be rock!</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+{% endblock %}
 
   <!-- Footer -->
   <footer class="py-5 bg-black">
