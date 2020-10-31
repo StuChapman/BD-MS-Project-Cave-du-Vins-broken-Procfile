@@ -23,11 +23,21 @@ def index():
     return render_template('login.html')
 
 
-@app.route('/login')
+# Credit: https://edubanq.com/programming/mongodb/creating-a-user-login-system-using-python-flask-and-mongodb/
+@app.route('/login', methods =['POST'])
 def login():
-    return ''
+    users = mongo.db.users
+    login_user = users.find_one({'name' : request.form['username']})
+
+    if login_user:
+        if bcrypt.hashpw(request.form['pass'].encode('utf-8'), login_user['password']) == login_user['password']:
+            session['username'] = request.form['username']
+            return redirect(url_for('index'))
+
+    return 'Invalid username/password combination'
 
 
+# Credit: https://edubanq.com/programming/mongodb/creating-a-user-login-system-using-python-flask-and-mongodb/
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == 'POST':
