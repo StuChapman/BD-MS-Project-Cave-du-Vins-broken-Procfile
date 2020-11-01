@@ -73,29 +73,28 @@ def register():
 # Add Wine routes
 @app.route('/add_wine_page')
 def add_wine_page():
-    return populate_form()
-    return render_template("add_wine.html")
+    return render_template("add_wine.html", user_name = 'User: ' + session['username'])
 
 
-@app.route('/add_wine')
+@app.route('/add_wine', methods=["GET", "POST"])
 def add_wine():
     nameadd = request.values.get("name")
     vintageadd = request.values.get("vintage")
     colouradd = request.values.get("colour")
     countryadd = request.values.get("country")
     regionadd = request.values.get("region")
-    return render_template("add_wine.html", results=mongo.db.wines.find( {"$and": [ {"wine_name": nameadd}, {"vintage": vintageadd}, {"colour": colouradd}, {"country": countryadd} , {"region": regionadd} ] }))
+    return render_template("add_wine.html", user_name = 'User: ' + session['username'], insert=mongo.db.wines.insert_one( {"wine_name": nameadd, "vintage": vintageadd, "colour": colouradd, "country": countryadd , "region": regionadd, "grape": "", "photo_url": "", "tasting_notes": ""} ))
 
 
 @app.route('/populate_form')
 def populate_form():
-    return render_template("add_wine.html", colours=mongo.db.colours.find(), country=mongo.db.country.find(), region=mongo.db.region.find())
+    return render_template("add_wine.html", user_name = 'User: ' + session['username'], colours=mongo.db.colours.find(), country=mongo.db.country.find(), region=mongo.db.region.find())
 
 
 # Browse Wines routes
 @app.route('/populate_search')
 def populate_search():
-    return render_template("index.html", colours=mongo.db.colours.find(), country=mongo.db.country.find(), region=mongo.db.region.find())
+    return render_template("index.html", user_name = 'User: ' + session['username'], colours=mongo.db.colours.find(), country=mongo.db.country.find(), region=mongo.db.region.find())
 
 
 @app.route("/search", methods=["GET", "POST"])

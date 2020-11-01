@@ -40,10 +40,11 @@ a {
 
 /* Header Section styling */
 header.hero {
-  position: relative;
-  overflow: hidden;
-  padding-top: calc(7rem + 72px);
-  padding-bottom: 7rem;
+    position: relative;
+    overflow: hidden;
+    height: 90vh;
+    padding-top: calc(7rem + 72px);
+    padding-bottom: 7rem;
 }
 
 .hero::before { /* Credit: https://coder-coder.com/background-image-opacity/ */
