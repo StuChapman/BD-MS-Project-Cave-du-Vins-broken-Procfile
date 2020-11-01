@@ -40,7 +40,7 @@ def login():
             session['username'] = request.form['username']
             return redirect(url_for('index'))
 
-    return 'Invalid username/password combination'
+    return render_template("login.html", password_error = 'Invalid username/password combination')
 
 
 # Credit: https://pythonbasics.org/flask-sessions/
@@ -63,7 +63,7 @@ def register():
             session['username'] = request.form['username']
             return redirect(url_for('index'))
 
-        return 'That username already exists'
+        return render_template("register.html", register_error = 'That username already exists')
 
     return render_template('register.html')
 
@@ -92,6 +92,12 @@ def populate_form():
 
 
 # Browse Wines routes
+@app.route('/search_page')
+def search_page():
+    return render_template("index.html", user_name = 'User: ' + session['username'])
+    return populate_search()
+
+
 @app.route('/populate_search')
 def populate_search():
     return render_template("index.html", user_name = 'User: ' + session['username'], colours=mongo.db.colours.find(), country=mongo.db.country.find(), region=mongo.db.region.find())

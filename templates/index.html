@@ -80,19 +80,21 @@
     <!-- Results Section -->
     <section id="results">
         <div class="container text-center mt-5 pt-5">
-            <h3 class="">results</h3>
-            <br>
-            {% for document in results %}
-            <div class="">
-                <h2 class="">{{ document.wine_name }}</h2>
-                <h3 class="">{{ document.vintage }}</h3>
-                <h3 class="">{{ document.colour }}</h3>
-                <h3 class="">{{ document.country }}</h3>
-                <h3 class="">{{ document.region }}</h3>
-                <h3 class="">{{ coloursearch }}</h3>
+            {% if results %}
+                <h3 class="">results</h3>
                 <br>
-            </div>
-            {% endfor %}
+                {% for document in results %}
+                <div class="">
+                    <h2 class="">{{ document.wine_name }}</h2>
+                    <h3 class="">{{ document.vintage }}</h3>
+                    <h3 class="">{{ document.colour }}</h3>
+                    <h3 class="">{{ document.country }}</h3>
+                    <h3 class="">{{ document.region }}</h3>
+                    <h3 class="">{{ coloursearch }}</h3>
+                    <br>
+                </div>
+                {% endfor %}
+            {% endif %}
         </div>
     </section>
 

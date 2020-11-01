@@ -8,13 +8,13 @@
             <div class="container">
                 <h1 class="hero-heading mb-0">Cave du Vins</h1>
                 <h2 class="hero-subheading mb-0">An online cellar of fine wine</h2>
-                <a href="#browse" class="btn btn-yellow btn-large btn-xl rounded-pill mt-5">Browse Wines</a>
+                <a href="#add" class="btn btn-yellow btn-large btn-xl rounded-pill mt-5">Add Wine</a>
             </div>
         </div>
     </header>
 
     <!-- Add Wine Section -->
-    <section>
+    <section id="add">
 
         <h3 class="text-center pt-5 mb-5">add wine</h3>
 
@@ -68,7 +68,7 @@
                         <i class="fas fa-plus"></i> Add
                     </button>
                     <button type="reset" 
-                        class="btn btn-blue btn-medium btn-xl rounded-pill mt-5 ml-auto mr-auto"> 
+                        class="btn btn-blue btn-medium btn-xl rounded-pill mt-5 ml-auto mr-auto mb-5"> 
                         <a href="{{ url_for('populate_form') }}" >
                         <i class=""></i> Reset</a>
                     </button>
