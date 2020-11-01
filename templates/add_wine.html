@@ -13,13 +13,13 @@
         </div>
     </header>
 
-    <!-- Browse Section -->
-    <section id="browse">
+    <!-- Add Wine Section -->
+    <section>
 
-        <h3 class="text-center pt-5 mb-5">browse wines</h3>
+        <h3 class="text-center pt-5 mb-5">add wine</h3>
 
         <div class="search ml-auto mr-auto">
-            <form action="{{ url_for('search') }}" method="post" class="searchform">
+            <form action="{{ url_for('add_wine') }}" method="post" class="searchform">
                 <div>
                     <div>
                         <label for="name">Wine Name</label>
@@ -65,52 +65,15 @@
                 <div class="row">
                     <button type="submit" 
                         class="btn btn-yellow btn-medium btn-xl rounded-pill mt-5 ml-auto mr-auto"> 
-                        <i class="fas fa-search"></i> Search
+                        <i class="fas fa-search"></i> Add
                     </button>
                     <button type="reset" 
                         class="btn btn-blue btn-medium btn-xl rounded-pill mt-5 ml-auto mr-auto"> 
-                        <a href="{{ url_for('populate_search') }}" >
+                        <a href="{{ url_for('populate_form') }}" >
                         <i class=""></i> Reset</a>
                     </button>
                 </div>
             </form>
-        </div>
-    </section>
-
-    <!-- Results Section -->
-    <section id="results">
-        <div class="container text-center mt-5 pt-5">
-            <h3 class="">results</h3>
-            <br>
-            {% for document in results %}
-            <div class="">
-                <h2 class="">{{ document.wine_name }}</h2>
-                <h3 class="">{{ document.vintage }}</h3>
-                <h3 class="">{{ document.colour }}</h3>
-                <h3 class="">{{ document.country }}</h3>
-                <h3 class="">{{ document.region }}</h3>
-                <h3 class="">{{ coloursearch }}</h3>
-                <br>
-            </div>
-            {% endfor %}
-        </div>
-    </section>
-
-    <section>
-        <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6 order-lg-2">
-            <div class="p-5">
-                <img class="img-fluid rounded-circle" src="static/img/03.jpg" alt="">
-            </div>
-            </div>
-            <div class="col-lg-6 order-lg-1">
-            <div class="p-5">
-                <h2 class="display-4">Let there be rock!</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
-            </div>
-            </div>
-        </div>
         </div>
     </section>
 

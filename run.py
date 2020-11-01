@@ -15,14 +15,15 @@ app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 mongo = PyMongo(app)
 
 
+# Start app on index.html
 @app.route('/')
 def index():
     if 'username' in session:
-        user_name = 'You are logged in as ' + session['username']
         return render_template('index.html', user_name = 'User: ' + session['username'])
     return render_template('index.html')
 
 
+# Log In/Out and Register routes
 @app.route('/login_page')
 def login_page():
     return render_template('login.html')
@@ -41,11 +42,12 @@ def login():
 
     return 'Invalid username/password combination'
 
+
 # Credit: https://pythonbasics.org/flask-sessions/
 @app.route('/logout')
 def logout():
-   session.pop('username', None)
-   return redirect(url_for('index'))
+    session.pop('username', None)
+    return redirect(url_for('index'))
 
 
 # Credit: https://edubanq.com/programming/mongodb/creating-a-user-login-system-using-python-flask-and-mongodb/
@@ -68,6 +70,29 @@ def register():
     return ''
 
 
+# Add Wine routes
+@app.route('/add_wine_page')
+def add_wine_page():
+    return populate_form()
+    return render_template("add_wine.html")
+
+
+@app.route('/add_wine')
+def add_wine():
+    nameadd = request.values.get("name")
+    vintageadd = request.values.get("vintage")
+    colouradd = request.values.get("colour")
+    countryadd = request.values.get("country")
+    regionadd = request.values.get("region")
+    return render_template("add_wine.html", results=mongo.db.wines.find( {"$and": [ {"wine_name": nameadd}, {"vintage": vintageadd}, {"colour": colouradd}, {"country": countryadd} , {"region": regionadd} ] }))
+
+
+@app.route('/populate_form')
+def populate_form():
+    return render_template("add_wine.html", colours=mongo.db.colours.find(), country=mongo.db.country.find(), region=mongo.db.region.find())
+
+
+# Browse Wines routes
 @app.route('/populate_search')
 def populate_search():
     return render_template("index.html", colours=mongo.db.colours.find(), country=mongo.db.country.find(), region=mongo.db.region.find())
@@ -83,22 +108,6 @@ def search():
     return render_template("index.html", results=mongo.db.wines.find({"$text": {"$search": namesearch}}))
     # return render_template("index.html", results=mongo.db.wines.find( {"$and": [ {"wine_name": namesearch}, {"vintage": vintagesearch}, {"colour": coloursearch}, {"country": countrysearch} , {"region": regionsearch} ] }))
     redirect(url_for('populate_search'))
-
-
-@app.route("/add_user", methods=["GET", "POST"])
-def add_user():
-    usernameinput = request.values.get("username")
-    passwordinput = request.values.get("password")
-    users = mongo.db.users
-    users.insert_one({"username": usernameinput, "password": passwordinput})
-    return redirect(url_for('populate_search'))
-
-
-@app.route("/log_in", methods=["GET", "POST"])
-def log_in():
-    usernamefind = request.values.get("usernamelog")
-    passwordfind = request.values.get("passwordlog")
-    return render_template("index.html", logintest = mongo.db.users.find({"username": usernamefind, "password": passwordfind}))
 
 
 if __name__ == '__main__':
