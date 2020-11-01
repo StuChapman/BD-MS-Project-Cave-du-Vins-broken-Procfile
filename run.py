@@ -73,7 +73,7 @@ def register():
 # Add Wine routes
 @app.route('/add_wine_page')
 def add_wine_page():
-    return render_template("add_wine.html", user_name = 'User: ' + session['username'])
+    return render_template("add_wine.html", user_name = 'User: ' + session['username'], colours=mongo.db.colours.find(), country=mongo.db.country.find(), region=mongo.db.region.find())
 
 
 @app.route('/add_wine', methods=["GET", "POST"])
@@ -94,8 +94,9 @@ def populate_form():
 # Browse Wines routes
 @app.route('/search_page')
 def search_page():
-    return render_template("index.html", user_name = 'User: ' + session['username'])
-    return populate_search()
+    if 'username' in session:
+        return render_template('index.html', user_name = 'User: ' + session['username'], colours=mongo.db.colours.find(), country=mongo.db.country.find(), region=mongo.db.region.find())
+    return render_template('index.html', colours=mongo.db.colours.find(), country=mongo.db.country.find(), region=mongo.db.region.find())
 
 
 @app.route('/populate_search')
