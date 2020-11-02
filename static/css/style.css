@@ -39,11 +39,17 @@ a {
     color: #FFD374;
 }
 
+
+/* Register Page styling */
+ .passwordtext {
+    color: white;
+}
+
 /* Header Section styling */
 header.hero {
     position: relative;
     overflow: hidden;
-    height: 90vh;
+    height: 95vh;
     padding-top: calc(7rem + 72px);
     padding-bottom: 7rem;
 }
