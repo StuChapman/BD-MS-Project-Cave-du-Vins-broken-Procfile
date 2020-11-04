@@ -37,7 +37,7 @@
                         <select name="colour" id="colour" class="searchitem">
                             <option value="select"></option>
                             {% for document in colours %}
-                            <option value="{{ document.colour }}">{{ document.colour }}</option>
+                                <option value="{{ document.colour }}">{{ document.colour }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -47,7 +47,7 @@
                         <select name="country" id="country" class="searchitem">
                             <option value="select"></option>
                             {% for document in country %}
-                            <option value="{{ document.country }}">{{ document.country }}</option>
+                                <option value="{{ document.country }}">{{ document.country }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -57,7 +57,17 @@
                         <select name="region" id="region" class="searchitem">
                             <option value="select"></option>
                             {% for document in region %}
-                            <option value="{{ document.region }}">{{ document.region }}</option>
+                                <option value="{{ document.region }}">{{ document.region }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="searchgrape">
+                        <label for="grape">Grape</label>
+                        <br>
+                        <select name="grape" id="grape" class="searchitem">
+                            <option value="select"></option>
+                            {% for document in grape %}
+                                <option value="{{ document.grape }}">{{ document.grape }}</option>
                             {% endfor %}
                         </select>
                     </div>
