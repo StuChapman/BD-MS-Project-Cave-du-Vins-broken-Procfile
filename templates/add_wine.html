@@ -16,7 +16,7 @@
     <!-- Add Wine Section -->
     <section id="add">
 
-        <h3 class="text-center pt-5 mb-5">add wine</h3>
+        <h3 class="text-center bookmark mb-3">add wine</h3>
 
         <div class="search ml-auto mr-auto">
             <form action="{{ url_for('add_wine') }}" method="post" class="searchform">
@@ -61,6 +61,20 @@
                             {% endfor %}
                         </select>
                     </div>
+                    <div class="searchregion">
+                        <label for="grape">Grape</label>
+                        <div 
+                            class="btn btn-blue btn-xsmall rounded-pill ml-2"
+                            data-toggle="modal" data-target="#AddWineModal">
+                            <i class="fas fa-plus"></i> Add</div>
+                        <br>
+                        <select name="grape" id="grape" class="searchitem">
+                            <option value="select"></option>
+                            {% for document in grape %}
+                            <option value="{{ document.grape }}">{{ document.grape }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
                 <div class="row">
                     <button type="submit" 
@@ -76,5 +90,30 @@
             </form>
         </div>
     </section>
+
+
+    <!-- Add Grape Modal -->
+    <div class="modal" tabindex="-1" role="dialog" id="AddWineModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add a grape variety to the list</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form  action="{{ url_for('add_grape') }}">
+                    <div class="modal-body">
+                        <input type="text" name="addgrape" id="addgrape" minlength="3" class="searchitem">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-blue btn-small rounded-pill" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-yellow btn-small rounded-pill">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 
 {% endblock %}

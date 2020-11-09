@@ -113,7 +113,8 @@ def add_wine_page():
         user_name = 'User: ' + session['username'], 
         colours=mongo.db.colours.find(), 
         country=mongo.db.country.find(), 
-        region=mongo.db.region.find()
+        region=mongo.db.region.find(), 
+        grape=mongo.db.grape.find()
         )
 
 
@@ -124,6 +125,7 @@ def add_wine():
     colouradd = request.values.get("colour")
     countryadd = request.values.get("country")
     regionadd = request.values.get("region")
+    grapeadd = request.values.get("grape")
     return render_template("add_wine.html", 
         user_name = 'User: ' + session['username'], 
         insert=mongo.db.wines.insert_one( 
@@ -132,12 +134,23 @@ def add_wine():
             "colour": colouradd, 
             "country": countryadd , 
             "region": regionadd, 
-            "grape": "", 
+            "grape": grapeadd, 
             "photo_url": "", 
             "tasting_notes": ""} 
             ))
 
 
+@app.route('/add_grape', methods=["GET", "POST"])
+def add_grape():
+    grapeadd = request.values.get("addgrape")
+    return render_template("add_wine.html", 
+        user_name = 'User: ' + session['username'], 
+        insert=mongo.db.grape.insert_one( 
+            {"grape": grapeadd} 
+            ))
+
+
+# Refresh Search Form route
 @app.route('/populate_form')
 def populate_form():
     return render_template("add_wine.html", user_name = 'User: ' + session['username'], colours=mongo.db.colours.find(), country=mongo.db.country.find(), region=mongo.db.region.find())

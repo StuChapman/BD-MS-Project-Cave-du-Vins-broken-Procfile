@@ -17,8 +17,24 @@
     height: 5rem;
 }
 
+.btn-small {
+    width: 5rem;
+    height: 2.5rem;
+}
+
+.btn-xsmall {
+    width: 2.5rem;
+    height: 1rem;
+    font-size: .6rem;
+    padding: 0;
+}
+
 a {
     color: black;
+}
+
+.bookmark {
+    padding-top: 15vh;
 }
 
 /* Login Page Styling */
@@ -76,7 +92,7 @@ header.hero .hero-content {
 }
 
 header.hero .hero-content .hero-heading {
-  font-size: 4rem;
+  font-size: 15vw;
 }
 
 header.hero .hero-content .hero-subheading {
