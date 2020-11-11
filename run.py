@@ -145,6 +145,10 @@ def add_grape():
     grapeadd = request.values.get("addgrape")
     return render_template("add_wine.html", 
         user_name = 'User: ' + session['username'], 
+        colours=mongo.db.colours.find(), 
+        country=mongo.db.country.find(), 
+        region=mongo.db.region.find(), 
+        grape=mongo.db.grape.find(), 
         insert=mongo.db.grape.insert_one( 
             {"grape": grapeadd} 
             ))
