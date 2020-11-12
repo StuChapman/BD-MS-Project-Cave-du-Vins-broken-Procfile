@@ -37,6 +37,10 @@ a {
     padding-top: 15vh;
 }
 
+.addlabel {
+    width: 4rem;
+}
+
 /* Login Page Styling */
 .loginform {
     width: 18rem;

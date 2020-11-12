@@ -100,7 +100,6 @@ def register():
             return render_template("register.html", register_error = 'Please enter a valid username of text and numbers, with no spaces')
 
 
-
     return render_template('register.html')
 
     return ''
@@ -140,10 +139,57 @@ def add_wine():
             ))
 
 
+@app.route('/add_country', methods=["GET", "POST"])
+def add_country():
+    countryadd = request.values.get("addcountry")
+    existing_country = mongo.db.country.find_one({'country': countryadd})
+    if existing_country is None:
+        return render_template("add_wine.html", 
+            user_name = 'User: ' + session['username'], 
+            colours=mongo.db.colours.find(), 
+            country=mongo.db.country.find(), 
+            region=mongo.db.region.find(), 
+            grape=mongo.db.grape.find(), 
+            insert=mongo.db.country.insert_one( 
+                {"country": countryadd} 
+                ))
+    return render_template("add_wine.html", 
+            user_name = 'User: ' + session['username'], 
+            colours=mongo.db.colours.find(), 
+            country=mongo.db.country.find(), 
+            region=mongo.db.region.find(), 
+            grape=mongo.db.grape.find(), 
+            )
+
+@app.route('/add_region', methods=["GET", "POST"])
+def add_region():
+    regionadd = request.values.get("addregion")
+    existing_region = mongo.db.region.find_one({'region': regionadd})
+    if existing_region is None:
+        return render_template("add_wine.html", 
+            user_name = 'User: ' + session['username'], 
+            colours=mongo.db.colours.find(), 
+            country=mongo.db.country.find(), 
+            region=mongo.db.region.find(), 
+            grape=mongo.db.grape.find(), 
+            insert=mongo.db.region.insert_one( 
+                {"region": regionadd} 
+                ))
+    return render_template("add_wine.html", 
+            user_name = 'User: ' + session['username'], 
+            colours=mongo.db.colours.find(), 
+            country=mongo.db.country.find(), 
+            region=mongo.db.region.find(), 
+            grape=mongo.db.grape.find(), 
+            )
+
+
 @app.route('/add_grape', methods=["GET", "POST"])
 def add_grape():
     grapeadd = request.values.get("addgrape")
-    return render_template("add_wine.html", 
+    existing_grape = mongo.db.grape.find_one({'grape': grapeadd})
+    if existing_grape is None:
+        return render_template("add_wine.html", 
         user_name = 'User: ' + session['username'], 
         colours=mongo.db.colours.find(), 
         country=mongo.db.country.find(), 
@@ -152,7 +198,13 @@ def add_grape():
         insert=mongo.db.grape.insert_one( 
             {"grape": grapeadd} 
             ))
-
+    return render_template("add_wine.html", 
+        user_name = 'User: ' + session['username'], 
+        colours=mongo.db.colours.find(), 
+        country=mongo.db.country.find(), 
+        region=mongo.db.region.find(), 
+        grape=mongo.db.grape.find(), 
+        )
 
 # Refresh Search Form route
 @app.route('/populate_form')

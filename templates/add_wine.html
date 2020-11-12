@@ -42,7 +42,11 @@
                         </select>
                     </div>
                     <div class="searchcountry">
-                        <label for="country">Country</label>
+                        <label class="addlabel" for="country">Country</label>
+                        <div 
+                            class="btn btn-blue btn-xsmall rounded-pill ml-2"
+                            data-toggle="modal" data-target="#AddCountryModal">
+                            <i class="fas fa-plus"></i> Add</div>
                         <br>
                         <select name="country" id="country" class="searchitem">
                             <option value="select"></option>
@@ -52,7 +56,11 @@
                         </select>
                     </div>
                     <div class="searchregion">
-                        <label for="region">Region</label>
+                        <label class="addlabel" for="region">Region</label>
+                        <div 
+                            class="btn btn-blue btn-xsmall rounded-pill ml-2"
+                            data-toggle="modal" data-target="#AddRegionModal">
+                            <i class="fas fa-plus"></i> Add</div>
                         <br>
                         <select name="region" id="region" class="searchitem">
                             <option value="select"></option>
@@ -62,10 +70,10 @@
                         </select>
                     </div>
                     <div class="searchregion">
-                        <label for="grape">Grape</label>
+                        <label class="addlabel" for="grape">Grape</label>
                         <div 
                             class="btn btn-blue btn-xsmall rounded-pill ml-2"
-                            data-toggle="modal" data-target="#AddWineModal">
+                            data-toggle="modal" data-target="#AddGrapeModal">
                             <i class="fas fa-plus"></i> Add</div>
                         <br>
                         <select name="grape" id="grape" class="searchitem">
@@ -92,8 +100,54 @@
     </section>
 
 
+    <!-- Add Country Modal -->
+    <div class="modal" tabindex="-1" role="dialog" id="AddCountryModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add a region to the list</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form  action="{{ url_for('add_country') }}">
+                    <div class="modal-body">
+                        <input type="text" name="addcountry" id="addcountry" minlength="3" class="searchitem">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-blue btn-small rounded-pill" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-yellow btn-small rounded-pill">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Region Modal -->
+    <div class="modal" tabindex="-1" role="dialog" id="AddRegionModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add a region to the list</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form  action="{{ url_for('add_region') }}">
+                    <div class="modal-body">
+                        <input type="text" name="addregion" id="addregion" minlength="3" class="searchitem">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-blue btn-small rounded-pill" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-yellow btn-small rounded-pill">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Add Grape Modal -->
-    <div class="modal" tabindex="-1" role="dialog" id="AddWineModal">
+    <div class="modal" tabindex="-1" role="dialog" id="AddGrapeModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
