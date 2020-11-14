@@ -95,12 +95,25 @@
                 <br>
                 {% for document in results %}
                 <div class="">
-                    <h2 class="">{{ document.wine_name }}</h2>
+                    <h1 class="">{{ document.wine_name }}</h2>
                     <h3 class="">{{ document.vintage }}</h3>
                     <h3 class="">{{ document.colour }}</h3>
                     <h3 class="">{{ document.country }}</h3>
                     <h3 class="">{{ document.region }}</h3>
                     <h3 class="">{{ coloursearch }}</h3>
+                    {% if user_name %}
+                        <div class="row">
+                            <p class="btn btn-blue btn-xxsmall rounded-pill ml-auto mr-1"
+                                data-toggle="modal" data-target="#AddTastingNoteModal">
+                                <i class="fas fa-plus"></i>
+                            </p>
+                            <p class="ml-1 mr-auto">
+                                Add Tasting Note
+                            </p>
+                        </div>
+                    {% endif %}
+                    <br>
+                    <br>
                     <br>
                 </div>
                 {% endfor %}
@@ -125,5 +138,29 @@
         </div>
         </div>
     </section>
+
+    <!-- Add Tasting Note Modal -->
+    <div class="modal" tabindex="-1" role="dialog" id="AddTastingNoteModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add a Tasting Note for this wine</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form  action="{{ url_for('add_tasting_note') }}">
+                    <div class="modal-body">
+                        <input type="text" name="addtastingnote" id="addtastingnote" minlength="3" class="searchitem">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-blue btn-small rounded-pill" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-yellow btn-small rounded-pill">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 
 {% endblock %}
