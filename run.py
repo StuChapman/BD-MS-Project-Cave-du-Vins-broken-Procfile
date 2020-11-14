@@ -284,9 +284,7 @@ def add_tasting_note_page(wine_id):
 def add_tasting_note():
     tastingnoteadd = request.values.get("add_tasting_note")
     wineid = request.values.get("wine_id")
-    existing_tastingnote = mongo.db.wines.find_one({'tasting_notes': tastingnoteadd})
-    if existing_tastingnote is None:
-        return render_template("index.html", 
+    return render_template("index.html", 
         user_name = 'User: ' + session['username'], 
         colours=mongo.db.colours.find(), 
         country=mongo.db.country.find(), 
@@ -294,13 +292,6 @@ def add_tasting_note():
         grape=mongo.db.grape.find(), 
         update=mongo.db.wines.update( {'_id': ObjectId(wineid)},
             {"$set": {'tasting_notes': tastingnoteadd}})) # Credit: https://stackoverflow.com/questions/10290621/how-do-i-partially-update-an-object-in-mongodb-so-the-new-object-will-overlay
-    return render_template("index.html", 
-        user_name = 'User: ' + session['username'], 
-        colours=mongo.db.colours.find(), 
-        country=mongo.db.country.find(), 
-        region=mongo.db.region.find(), 
-        grape=mongo.db.grape.find(), 
-        )
 
 
 if __name__ == '__main__':

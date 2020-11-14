@@ -125,7 +125,10 @@ header.hero .hero-content .hero-subheading {
 }
 
 .tastingnote {
-    width: 50vw;
+    width: 80vw;
+    height: 8rem;
+    overflow-y: scroll;
+    opacity: .6;
 }
 
 /* Large Media Device styling */

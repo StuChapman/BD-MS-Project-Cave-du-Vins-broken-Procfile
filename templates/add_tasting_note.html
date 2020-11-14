@@ -7,13 +7,14 @@
         <div class="hero-content">
             <div class="container">
                 <div>
-                    <h1>Add Tasting Note for {{ wine.wine_name }}, {{ wine.vintage }}</h1>
+                    <h3>Add Tasting Note for: {{ wine.wine_name }}, {{ wine.vintage }}</h3>
                 </div>
+                <br>
                 <form method="POST" action="{{ url_for('add_tasting_note', wine_id=wine._id) }}">
                     <div>
-                        <input type="text" class="tastingnote ml-auto mb-1" name="add_tasting_note" value="{{ wine.tasting_notes }}">
+                        <textarea type="text" class="tastingnote ml-auto mb-1" name="add_tasting_note">{{ wine.tasting_notes }}</textarea>
                     </div>
-                    <button type="submit" class="btn btn-yellow mt-2">Add</button>
+                    <button type="submit" class="btn btn-yellow rounded-pill mt-2">Add</button>
                 </form>
                 <br>
             </div>
