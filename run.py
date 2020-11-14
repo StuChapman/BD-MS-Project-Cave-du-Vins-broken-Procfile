@@ -266,10 +266,24 @@ def search():
                                             )
     redirect(url_for('populate_search'))
 
+# Add tasting Note Routes
+@app.route('/add_tasting_note_page/<wine_id>')
+def add_tasting_note_page(wine_id):
+    the_wine =  mongo.db.wines.find_one({"_id": ObjectId(wine_id)})
+    return render_template('add_tasting_note.html', 
+                                            wine=the_wine, 
+                                            user_name = 'User: ' + session['username'], 
+                                            colours=mongo.db.colours.find(), 
+                                            country=mongo.db.country.find(), 
+                                            region=mongo.db.region.find(), 
+                                            grape=mongo.db.grape.find()
+                                            )
+
 
 @app.route('/add_tasting_note', methods=["GET", "POST"])
 def add_tasting_note():
     tastingnoteadd = request.values.get("addtastingnote")
+    wineid = request.values.get("wine_id")
     existing_tastingnote = mongo.db.wines.find_one({'tasting_notes': tastingnoteadd})
     if existing_tastingnote is None:
         return render_template("index.html", 
@@ -278,9 +292,8 @@ def add_tasting_note():
         country=mongo.db.country.find(), 
         region=mongo.db.region.find(), 
         grape=mongo.db.grape.find(), 
-        insert=mongo.db.wines.insert_one( 
-            {"tasting_notes": tastingnoteadd} 
-            ))
+        update=mongo.db.wines.update( {'_id': ObjectId(wineid)},
+            {'tasting_notes': tastingnoteadd}))
     return render_template("index.html", 
         user_name = 'User: ' + session['username'], 
         colours=mongo.db.colours.find(), 
