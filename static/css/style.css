@@ -124,6 +124,10 @@ header.hero .hero-content .hero-subheading {
     height: 2rem;
 }
 
+.tastingnote {
+    width: 50vw;
+}
+
 /* Large Media Device styling */
 @media (min-width: 992px) {
     .search {

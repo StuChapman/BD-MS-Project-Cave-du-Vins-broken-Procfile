@@ -10,8 +10,8 @@
                     <h1>Add Tasting Note for {{ wine.wine_name }}, {{ wine.vintage }}</h1>
                 </div>
                 <form method="POST" action="{{ url_for('add_tasting_note', wine_id=wine._id) }}">
-                    <div class="row">
-                        <input type="text" class="login ml-auto mb-1" name="add_tasting_note" placeholder="Type here ...">
+                    <div>
+                        <input type="text" class="tastingnote ml-auto mb-1" name="add_tasting_note" value="{{ wine.tasting_notes }}">
                     </div>
                     <button type="submit" class="btn btn-yellow mt-2">Add</button>
                 </form>
