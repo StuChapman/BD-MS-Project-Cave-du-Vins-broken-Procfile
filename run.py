@@ -128,7 +128,7 @@ def add_wine():
     return render_template("add_wine.html", 
         user_name = 'User: ' + session['username'], 
         insert=mongo.db.wines.insert_one( 
-            {"wine_name": nameadd, 
+            {"wine_name": nameadd.title(), 
             "vintage": vintageadd, 
             "colour": colouradd, 
             "country": countryadd , 
@@ -151,7 +151,7 @@ def add_country():
             region=mongo.db.region.find(), 
             grape=mongo.db.grape.find(), 
             insert=mongo.db.country.insert_one( 
-                {"country": countryadd} 
+                {"country": countryadd.title()} 
                 ))
     return render_template("add_wine.html", 
             user_name = 'User: ' + session['username'], 
@@ -174,7 +174,7 @@ def add_region():
             region=mongo.db.region.find(), 
             grape=mongo.db.grape.find(), 
             insert=mongo.db.region.insert_one( 
-                {"region": regionadd} 
+                {"region": regionadd.title()} 
                 ))
     return render_template("add_wine.html", 
             user_name = 'User: ' + session['username'], 
@@ -197,7 +197,7 @@ def add_grape():
         region=mongo.db.region.find(), 
         grape=mongo.db.grape.find(), 
         insert=mongo.db.grape.insert_one( 
-            {"grape": grapeadd} 
+            {"grape": grapeadd.title()} 
             ))
     return render_template("add_wine.html", 
         user_name = 'User: ' + session['username'], 
@@ -231,7 +231,7 @@ def populate_search():
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
-    namesearch = request.values.get("name")
+    namesearch = request.values.get("name").title()
     vintagesearch = request.values.get("vintage")
     coloursearch = request.values.get("colour")
     countrysearch = request.values.get("country")
