@@ -135,7 +135,7 @@ header.hero .hero-content .hero-subheading {
 
 /* Category.html styling */
 .deleteitem {
-    width: 20vw;
+    width: 50vw;
     height: 2rem;
 }
 
@@ -157,4 +157,7 @@ header.hero .hero-content .hero-subheading {
         width: 34vw;
     }
 
+    .deleteitem {
+        width: 20vw;
+    }
 }

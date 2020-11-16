@@ -36,9 +36,10 @@
                 </form>
                 <br>
             </div>
-            
-                <div class="deleteflash ml-auto mr-auto">
-                {% with messages = get_flashed_messages() %}
+        </div>
+        <!-- Delete Alert Flash -->
+        <div class="deleteflash ml-auto mr-auto mt-0">
+            {% with messages = get_flashed_messages() %}
                 {% if messages %}
                     {% for message in messages %}
                     <div class="alert alert-warning alert-dismissible" role="alert">
@@ -47,9 +48,9 @@
                     </div>
                     {% endfor %}
                 {% endif %}
-                {% endwith %}
-
+            {% endwith %}
         </div>
     </header>
+
 
 {% endblock %}
