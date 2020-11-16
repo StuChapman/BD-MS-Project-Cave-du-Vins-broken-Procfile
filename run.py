@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, redirect, request, url_for, session
+from flask import Flask, render_template, redirect, request, url_for, session, flash
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 import bcrypt
@@ -105,7 +105,7 @@ def register():
     return ''
 
 
-# Add Wine routes
+# Add/Delete Wine routes
 @app.route('/add_wine_page')
 def add_wine_page():
     return render_template("add_wine.html", 
@@ -116,7 +116,7 @@ def add_wine_page():
         grape=mongo.db.grape.find()
         )
 
-# Add Entries to Collections routes
+
 @app.route('/add_wine', methods=["GET", "POST"])
 def add_wine():
     nameadd = request.values.get("name")
@@ -139,6 +139,20 @@ def add_wine():
             ))
 
 
+@app.route('/delete_wine/<wine_id>')
+def delete_wine(wine_id):
+    flash("The wine has been deleted") # Credit: https://pythonprogramming.net/flash-flask-tutorial/
+    return render_template('index.html',
+                            user_name = 'User: ' + session['username'], 
+                            colours=mongo.db.colours.find(), 
+                            country=mongo.db.country.find(), 
+                            region=mongo.db.region.find(), 
+                            grape=mongo.db.grape.find(),
+                            delete=mongo.db.wines.remove( {'_id': ObjectId(wine_id)})
+                            )
+
+
+# Add/Deleted Documents to/from Collections routes
 @app.route('/add_country', methods=["GET", "POST"])
 def add_country():
     countryadd = request.values.get("addcountry")
@@ -239,16 +253,16 @@ def search():
     # return render_template("index.html", results=mongo.db.wines.find({"$text": {"$search": namesearch}}))
     if 'username' in session:
         return render_template("index.html", results=mongo.db.wines.find( 
-                                            {"$and": 
-                                            [ 
-                                            {"$text": {"$search": namesearch}}, 
-                                            {"vintage": vintagesearch}
-                                            ] }), 
-                                            user_name = 'User: ' + session['username'], 
-                                            colours=mongo.db.colours.find(), 
-                                            country=mongo.db.country.find(), 
-                                            region=mongo.db.region.find(), 
-                                            grape=mongo.db.grape.find()
+                                                {"$and": 
+                                                [ 
+                                                {"$text": {"$search": namesearch}}, 
+                                                {"vintage": vintagesearch}
+                                                ] }), 
+                                                user_name = 'User: ' + session['username'], 
+                                                colours=mongo.db.colours.find(), 
+                                                country=mongo.db.country.find(), 
+                                                region=mongo.db.region.find(), 
+                                                grape=mongo.db.grape.find()
                                             )
     return render_template("index.html", results=mongo.db.wines.find( 
                                             {"$and": 
@@ -271,13 +285,13 @@ def search():
 def add_tasting_note_page(wine_id):
     the_wine =  mongo.db.wines.find_one({"_id": ObjectId(wine_id)})
     return render_template('add_tasting_note.html', 
-                                            wine=the_wine, 
-                                            user_name = 'User: ' + session['username'], 
-                                            colours=mongo.db.colours.find(), 
-                                            country=mongo.db.country.find(), 
-                                            region=mongo.db.region.find(), 
-                                            grape=mongo.db.grape.find()
-                                            )
+                            wine=the_wine, 
+                            user_name = 'User: ' + session['username'], 
+                            colours=mongo.db.colours.find(), 
+                            country=mongo.db.country.find(), 
+                            region=mongo.db.region.find(), 
+                            grape=mongo.db.grape.find()
+                            )
 
 
 @app.route('/add_tasting_note', methods=["GET", "POST"])

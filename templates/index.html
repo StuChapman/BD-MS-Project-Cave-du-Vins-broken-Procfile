@@ -13,6 +13,18 @@
         </div>
     </header>
 
+	<div class="deleteflash ml-auto mr-auto">
+	{% with messages = get_flashed_messages() %}
+	  {% if messages %}
+	    {% for message in messages %}
+		  <div class="alert alert-warning alert-dismissible" role="alert">
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+			{{ message }}
+		  </div>
+		{% endfor %}
+	  {% endif %}
+	{% endwith %}
+
     <!-- Browse Section -->
     <section id="browse">
 
@@ -103,12 +115,23 @@
                     <p>{{ document.tasting_notes }}</p>
                     {% if user_name %}
                         <div class="row">
-                            <a class="btn btn-blue btn-xxsmall rounded-pill ml-auto mr-1"
+                            <a class="btn btn-yellow btn-xxsmall rounded-pill ml-auto mr-1"
                                 href="{{ url_for('add_tasting_note_page', wine_id=document._id) }}">
                                 <i class="fas fa-plus"></i>
                             </a>
                             <p class="ml-1 mr-auto">
                                 Add/Update Tasting Note
+                            </p>
+                        </div>
+                    {% endif %}
+                    {% if user_name == 'User: admin' %}
+                        <div class="row">
+                            <a class="btn btn-blue btn-xxsmall rounded-pill ml-auto mr-1"
+                                href="{{ url_for('delete_wine', wine_id=document._id) }}">
+                                <i class="fas fa-minus"></i>
+                            </a>
+                            <p class="ml-1 mr-auto">
+                                Delete Wine
                             </p>
                         </div>
                     {% endif %}

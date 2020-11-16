@@ -131,15 +131,27 @@ header.hero .hero-content .hero-subheading {
     opacity: .6;
 }
 
+.deleteflash {
+    width: 100vw;
+    margin-top: 5rem;
+}
+
 /* Large Media Device styling */
 @media (min-width: 992px) {
     .search {
         width: 33vw;
     }
+
     header.hero .hero-content .hero-heading {
     font-size: 7rem;
     }
+
     header.hero .hero-content .hero-subheading {
     font-size: 4rem;
     }
+
+    .deleteflash {
+        width: 34vw;
+    }
+
 }
