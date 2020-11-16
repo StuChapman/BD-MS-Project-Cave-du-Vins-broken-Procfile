@@ -222,6 +222,41 @@ def add_grape():
         )
 
 
+@app.route('/delete_category_page/<category_id>')
+def delete_category_page(category_id):
+    return render_template('categories.html',
+                            category_id = category_id,
+                            user_name = 'User: ' + session['username'], 
+                            colours=mongo.db.colours.find(), 
+                            country=mongo.db.country.find(), 
+                            region=mongo.db.region.find(), 
+                            grape=mongo.db.grape.find(),
+                            )
+
+
+@app.route('/delete_category/<category_id>', methods=["GET", "POST"])
+def delete_category(category_id):
+    category = request.values.get("category")
+    flash("The " + category_id + " has been deleted") # Credit: https://pythonprogramming.net/flash-flask-tutorial/
+    if category_id == "country":
+        return render_template('categories.html',
+                                user_name = 'User: ' + session['username'], 
+                                country=mongo.db.country.find(), 
+                                category_id="country", 
+                                delete=mongo.db.country.delete_one( {'country': category}))
+    if category_id == "region":
+        return render_template('categories.html',
+                                user_name = 'User: ' + session['username'], 
+                                region=mongo.db.region.find(), 
+                                category_id="region", 
+                                delete=mongo.db.region.delete_one( {'region': category}))
+    if category_id == "grape":
+        return render_template('categories.html',
+                                user_name = 'User: ' + session['username'], 
+                                grape=mongo.db.grape.find(), 
+                                category_id="grape", 
+                                delete=mongo.db.grape.delete_one( {'grape': category}))
+
 # Refresh Search Form route
 @app.route('/populate_form')
 def populate_form():

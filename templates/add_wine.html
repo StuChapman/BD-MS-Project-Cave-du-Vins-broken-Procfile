@@ -46,11 +46,14 @@
                         <div 
                             class="btn btn-yellow btn-xsmall rounded-pill ml-2"
                             data-toggle="modal" data-target="#AddCountryModal">
-                            <i class="fas fa-plus"></i> Add</div>
-                        <div 
-                            class="btn btn-blue btn-xsmall rounded-pill ml-2"
-                            data-toggle="modal" data-target="#AddCountryModal">
-                            <i class="fas fa-minus"></i> Del</div>
+                            <i class="fas fa-plus"></i> Add
+                        </div>
+                        {% if user_name == 'User: admin' %}
+                            <a class="btn btn-blue btn-xsmall rounded-pill ml-2"
+                                    href="{{ url_for('delete_category_page', category_id='country') }}">
+                                    <i class="fas fa-minus"></i> Del
+                            </a>
+                        {% endif %}
                         <br>
                         <select name="country" id="country" class="searchitem">
                             <option value="select"></option>
@@ -64,7 +67,14 @@
                         <div 
                             class="btn btn-yellow btn-xsmall rounded-pill ml-2"
                             data-toggle="modal" data-target="#AddRegionModal">
-                            <i class="fas fa-plus"></i> Add</div>
+                            <i class="fas fa-plus"></i> Add
+                        </div>
+                        {% if user_name == 'User: admin' %}
+                            <a class="btn btn-blue btn-xsmall rounded-pill ml-2"
+                                    href="{{ url_for('delete_category_page', category_id='region') }}">
+                                    <i class="fas fa-minus"></i> Del
+                            </a>
+                        {% endif %}
                         <br>
                         <select name="region" id="region" class="searchitem">
                             <option value="select"></option>
@@ -78,7 +88,14 @@
                         <div 
                             class="btn btn-yellow btn-xsmall rounded-pill ml-2"
                             data-toggle="modal" data-target="#AddGrapeModal">
-                            <i class="fas fa-plus"></i> Add</div>
+                            <i class="fas fa-plus"></i> Add
+                        </div>
+                        {% if user_name == 'User: admin' %}
+                            <a class="btn btn-blue btn-xsmall rounded-pill ml-2"
+                                    href="{{ url_for('delete_category_page', category_id='grape') }}">
+                                    <i class="fas fa-minus"></i> Del
+                            </a>
+                        {% endif %}
                         <br>
                         <select name="grape" id="grape" class="searchitem">
                             <option value="select"></option>
@@ -96,7 +113,8 @@
                     <button type="reset" 
                         class="btn btn-blue btn-medium btn-xl rounded-pill mt-5 ml-auto mr-auto mb-5"> 
                         <a href="{{ url_for('populate_form') }}" >
-                        <i class=""></i> Reset</a>
+                        <i class=""></i> Reset
+                        </a>
                     </button>
                 </div>
             </form>

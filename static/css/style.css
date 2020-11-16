@@ -118,9 +118,6 @@ header.hero .hero-content .hero-subheading {
 
 .searchitem {
     width: 100%;
-}
-
-.searchitem {
     height: 2rem;
 }
 
@@ -134,6 +131,12 @@ header.hero .hero-content .hero-subheading {
 .deleteflash {
     width: 100vw;
     margin-top: 5rem;
+}
+
+/* Category.html styling */
+.deleteitem {
+    width: 20vw;
+    height: 2rem;
 }
 
 /* Large Media Device styling */
