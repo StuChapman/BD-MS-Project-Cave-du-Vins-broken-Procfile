@@ -285,13 +285,19 @@ def search():
     coloursearch = request.values.get("colour")
     countrysearch = request.values.get("country")
     regionsearch = request.values.get("region")
+    grapesearch = request.values.get("grape")
     # return render_template("index.html", results=mongo.db.wines.find({"$text": {"$search": namesearch}}))
     if 'username' in session:
         return render_template("index.html", results=mongo.db.wines.find( 
-                                                {"$and": 
+                                                {"$or": 
                                                 [ 
                                                 {"$text": {"$search": namesearch}}, 
-                                                {"vintage": vintagesearch}
+                                                {"vintage": vintagesearch}, 
+                                                {"colour": coloursearch}, 
+                                                {"country": countrysearch}, 
+                                                {"region": regionsearch}, 
+                                                {"grape": grapesearch}, 
+                                                { "$and": [ {"wine_name": namesearch}, {"vintage": vintagesearch}]}
                                                 ] }), 
                                                 user_name = 'User: ' + session['username'], 
                                                 colours=mongo.db.colours.find(), 
