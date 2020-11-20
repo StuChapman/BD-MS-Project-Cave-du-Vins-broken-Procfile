@@ -20,19 +20,16 @@ mongo = PyMongo(app)
 @app.route('/')
 def index():
     if 'username' in session:
-        return render_template('index.html', 
-            user_name = 'User: ' + session['username'], 
-            colours=mongo.db.colours.find(), 
-            country=mongo.db.country.find(), 
-            region=mongo.db.region.find(), 
-            grape=mongo.db.grape.find()
-            )
+        user_return = 'User: ' + session['username']
+    else:
+        user_return = 'Cave du Vins'
     return render_template('index.html', 
-            colours=mongo.db.colours.find(), 
-            country=mongo.db.country.find(), 
-            region=mongo.db.region.find(), 
-            grape=mongo.db.grape.find()
-            )
+        user_name = user_return, 
+        colours=mongo.db.colours.find(), 
+        country=mongo.db.country.find(), 
+        region=mongo.db.region.find(), 
+        grape=mongo.db.grape.find()
+        )
 
 
 # Log In/Out and Register routes
@@ -109,12 +106,12 @@ def register():
 @app.route('/add_wine_page')
 def add_wine_page():
     return render_template("add_wine.html", 
-        user_name = 'User: ' + session['username'], 
-        colours=mongo.db.colours.find(), 
-        country=mongo.db.country.find(), 
-        region=mongo.db.region.find(), 
-        grape=mongo.db.grape.find()
-        )
+                            user_name = 'User: ' + session['username'], 
+                            colours=mongo.db.colours.find(), 
+                            country=mongo.db.country.find(), 
+                            region=mongo.db.region.find(), 
+                            grape=mongo.db.grape.find()
+                            )
 
 
 @app.route('/add_wine', methods=["GET", "POST"])
@@ -126,17 +123,17 @@ def add_wine():
     regionadd = request.values.get("region")
     grapeadd = request.values.get("grape")
     return render_template("add_wine.html", 
-        user_name = 'User: ' + session['username'], 
-        insert=mongo.db.wines.insert_one( 
-            {"wine_name": nameadd.title(), 
-            "vintage": vintageadd, 
-            "colour": colouradd, 
-            "country": countryadd , 
-            "region": regionadd, 
-            "grape": grapeadd, 
-            "photo_url": "", 
-            "tasting_notes": ""} 
-            ))
+                            user_name = 'User: ' + session['username'], 
+                            insert=mongo.db.wines.insert_one( 
+                                {"wine_name": nameadd.title(), 
+                                "vintage": vintageadd, 
+                                "colour": colouradd, 
+                                "country": countryadd , 
+                                "region": regionadd, 
+                                "grape": grapeadd, 
+                                "photo_url": "", 
+                                "tasting_notes": ""} 
+                                ))
 
 
 @app.route('/delete_wine/<wine_id>')
@@ -260,22 +257,38 @@ def delete_category(category_id):
 # Refresh Search Form route
 @app.route('/populate_form')
 def populate_form():
-    return render_template("add_wine.html", user_name = 'User: ' + session['username'], colours=mongo.db.colours.find(), country=mongo.db.country.find(), region=mongo.db.region.find())
+    return render_template("add_wine.html", user_name = 'User: ' + session['username'], 
+                                            colours=mongo.db.colours.find(), 
+                                            country=mongo.db.country.find(), 
+                                            region=mongo.db.region.find(), 
+                                            grape=mongo.db.grape.find())
 
 
 # Browse Wines routes
 @app.route('/search_page')
 def search_page():
     if 'username' in session:
-        return render_template('index.html', user_name = 'User: ' + session['username'], colours=mongo.db.colours.find(), country=mongo.db.country.find(), region=mongo.db.region.find())
-    return render_template('index.html', colours=mongo.db.colours.find(), country=mongo.db.country.find(), region=mongo.db.region.find())
-
+        user_return = 'User: ' + session['username']
+    else:
+        user_return = 'Cave du Vins'
+    return render_template('index.html', user_name = user_return, 
+                                            colours=mongo.db.colours.find(), 
+                                            country=mongo.db.country.find(), 
+                                            region=mongo.db.region.find(), 
+                                            grape=mongo.db.grape.find())
+    
 
 @app.route('/populate_search')
 def populate_search():
     if 'username' in session:
-        return render_template("index.html", user_name = 'User: ' + session['username'], colours=mongo.db.colours.find(), country=mongo.db.country.find(), region=mongo.db.region.find(), grape=mongo.db.grape.find())
-    return render_template("index.html", colours=mongo.db.colours.find(), country=mongo.db.country.find(), region=mongo.db.region.find(), grape=mongo.db.grape.find())
+        user_return = 'User: ' + session['username']
+    else:
+        user_return = 'Cave du Vins'
+    return render_template("index.html", user_name = user_return, 
+                                            colours=mongo.db.colours.find(), 
+                                            country=mongo.db.country.find(), 
+                                            region=mongo.db.region.find(), 
+                                            grape=mongo.db.grape.find())
 
 
 @app.route("/search", methods=["GET", "POST"])
@@ -306,21 +319,9 @@ def search():
         grapesearch = request.values.get("grape")
 
     if 'username' in session:
-        return render_template("index.html", results=mongo.db.wines.find( 
-                                                {"$and": 
-                                                [ 
-                                                {"wine_name": namesearch}, 
-                                                {"vintage": vintagesearch}, 
-                                                {"colour": coloursearch}, 
-                                                {"country": countrysearch}, 
-                                                {"region": regionsearch} 
-                                                ] }), 
-                                                user_name = 'User: ' + session['username'], 
-                                                colours=mongo.db.colours.find(), 
-                                                country=mongo.db.country.find(), 
-                                                region=mongo.db.region.find(), 
-                                                grape=mongo.db.grape.find()
-                                            )
+        user_return = 'User: ' + session['username']
+    else:
+        user_return = 'Cave du Vins'
     return render_template("index.html", results=mongo.db.wines.find( 
                                             {"$and": 
                                             [ 
@@ -329,13 +330,14 @@ def search():
                                             {"colour": coloursearch}, 
                                             {"country": countrysearch}, 
                                             {"region": regionsearch} 
-                                            ] }),  
+                                            ] }), 
+                                            user_name = user_return, 
                                             colours=mongo.db.colours.find(), 
                                             country=mongo.db.country.find(), 
                                             region=mongo.db.region.find(), 
                                             grape=mongo.db.grape.find()
-                                            )
-    redirect(url_for('populate_search'))
+                                        )
+
 
 # Add tasting Note Routes
 @app.route('/add_tasting_note_page/<wine_id>')
