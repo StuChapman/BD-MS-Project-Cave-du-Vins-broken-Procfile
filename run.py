@@ -280,25 +280,28 @@ def populate_search():
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
-    namesearch = request.values.get("name").title()
+    if request.values.get("name") == "":
+        namesearch = {'$regex': '.*'}
+    else:
+        namesearch = request.values.get("name").title()
     if request.values.get("vintage") == "":
-        vintagesearch = {'$regex': '1*'}
+        vintagesearch = {'$regex': '.*'}
     else:
         vintagesearch = request.values.get("vintage")
     if request.values.get("colour") == "":
-        coloursearch = {'$regex': '1*'}
+        coloursearch = {'$regex': '.*'}
     else:
         coloursearch = request.values.get("colour")
     if request.values.get("country") == "":
-        countrysearch = {'$regex': '1*'}
+        countrysearch = {'$regex': '.*'}
     else:
         countrysearch = request.values.get("country")
     if request.values.get("region") == "":
-        regionsearch = {'$regex': '1*'}
+        regionsearch = {'$regex': '.*'}
     else:
         regionsearch = request.values.get("region")
     if request.values.get("grape") == "":
-        grapesearch = {'$regex': '1*'}
+        grapesearch = {'$regex': '.*'}
     else:
         grapesearch = request.values.get("grape")
 
@@ -306,10 +309,10 @@ def search():
         return render_template("index.html", results=mongo.db.wines.find( 
                                                 {"$and": 
                                                 [ 
-                                                {"$text": {"$search": namesearch}}, 
+                                                {"wine_name": namesearch}, 
                                                 {"vintage": vintagesearch}, 
                                                 {"colour": coloursearch}, 
-                                                {"country": countrysearch} , 
+                                                {"country": countrysearch}, 
                                                 {"region": regionsearch} 
                                                 ] }), 
                                                 user_name = 'User: ' + session['username'], 
@@ -324,7 +327,7 @@ def search():
                                             {"$text": {"$search": namesearch}}, 
                                             {"vintage": vintagesearch}, 
                                             {"colour": coloursearch}, 
-                                            {"country": countrysearch} , 
+                                            {"country": countrysearch}, 
                                             {"region": regionsearch} 
                                             ] }),  
                                             colours=mongo.db.colours.find(), 
