@@ -281,23 +281,36 @@ def populate_search():
 @app.route("/search", methods=["GET", "POST"])
 def search():
     namesearch = request.values.get("name").title()
-    vintagesearch = request.values.get("vintage")
-    coloursearch = request.values.get("colour")
-    countrysearch = request.values.get("country")
-    regionsearch = request.values.get("region")
-    grapesearch = request.values.get("grape")
-    # return render_template("index.html", results=mongo.db.wines.find({"$text": {"$search": namesearch}}))
+    if request.values.get("vintage") == "":
+        vintagesearch = {'$regex': '1*'}
+    else:
+        vintagesearch = request.values.get("vintage")
+    if request.values.get("colour") == "":
+        coloursearch = {'$regex': '1*'}
+    else:
+        coloursearch = request.values.get("colour")
+    if request.values.get("country") == "":
+        countrysearch = {'$regex': '1*'}
+    else:
+        countrysearch = request.values.get("country")
+    if request.values.get("region") == "":
+        regionsearch = {'$regex': '1*'}
+    else:
+        regionsearch = request.values.get("region")
+    if request.values.get("grape") == "":
+        grapesearch = {'$regex': '1*'}
+    else:
+        grapesearch = request.values.get("grape")
+
     if 'username' in session:
         return render_template("index.html", results=mongo.db.wines.find( 
-                                                {"$or": 
+                                                {"$and": 
                                                 [ 
                                                 {"$text": {"$search": namesearch}}, 
                                                 {"vintage": vintagesearch}, 
                                                 {"colour": coloursearch}, 
-                                                {"country": countrysearch}, 
-                                                {"region": regionsearch}, 
-                                                {"grape": grapesearch}, 
-                                                { "$and": [ {"wine_name": namesearch}, {"vintage": vintagesearch}]}
+                                                {"country": countrysearch} , 
+                                                {"region": regionsearch} 
                                                 ] }), 
                                                 user_name = 'User: ' + session['username'], 
                                                 colours=mongo.db.colours.find(), 
