@@ -13,7 +13,7 @@
         </div>
     </header>
 
-	<div class="deleteflash ml-auto mr-auto">
+	<div class="ml-auto mr-auto">
 	{% with messages = get_flashed_messages() %}
 	  {% if messages %}
 	    {% for message in messages %}
@@ -28,7 +28,7 @@
     <!-- Browse Section -->
     <section id="browse">
 
-        <h3 class="text-center bookmark mb-3">browse wines</h3>
+        <h3 class="text-center mb-3">browse wines</h3>
 
         <div class="search ml-auto mr-auto">
             <form action="{{ url_for('search') }}" method="post" class="searchform">
@@ -103,7 +103,7 @@
     <section id="results">
         <div class="container text-center mt-5 pt-5">
             {% if results %}
-                <h3 class="">results</h3>
+                <h3>results</h3>
                 <br>
                 {% for document in results %}
                 <div>
@@ -113,7 +113,7 @@
                     <h3>{{ document.country }}</h3>
                     <h3>{{ document.region }}</h3>
                     <p>{{ document.tasting_notes }}</p>
-                    {% if user_name %}
+                    {% if user_name != 'Cave du Vins' %}
                         <div class="row">
                             <a class="btn btn-yellow btn-xxsmall rounded-pill ml-auto mr-1"
                                 href="{{ url_for('add_tasting_note_page', wine_id=document._id) }}">

@@ -35,7 +35,12 @@ def index():
 # Log In/Out and Register routes
 @app.route('/login_page')
 def login_page():
-    return render_template('login.html')
+    if 'username' in session:
+        user_return = 'User: ' + session['username']
+    else:
+        user_return = 'Cave du Vins'
+    return render_template('login.html', 
+                            user_name = user_return)
 
 
 # Credit: https://edubanq.com/programming/mongodb/creating-a-user-login-system-using-python-flask-and-mongodb/
@@ -96,8 +101,12 @@ def register():
         else:
             return render_template("register.html", register_error = 'Please enter a valid username of text and numbers, with no spaces')
 
-
-    return render_template('register.html')
+    if 'username' in session:
+        user_return = 'User: ' + session['username']
+    else:
+        user_return = 'Cave du Vins'
+    return render_template('register.html', 
+                            user_name = user_return)
 
     return ''
 
@@ -293,8 +302,9 @@ def populate_search():
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
+     # Credit: https://stackoverflow.com/questions/55617412/how-to-perform-wildcard-searches-mongodb-in-python-with-pymongo
     if request.values.get("name") == "":
-        namesearch = {'$regex': '.*'}
+        namesearch = "Chateau"
     else:
         namesearch = request.values.get("name").title()
     if request.values.get("vintage") == "":
