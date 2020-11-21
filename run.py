@@ -304,7 +304,7 @@ def populate_search():
 def search():
      # Credit: https://stackoverflow.com/questions/55617412/how-to-perform-wildcard-searches-mongodb-in-python-with-pymongo
     if request.values.get("name") == "":
-        namesearch = "Chateau"
+        namesearch = """\"Chateau Latour\""""
     else:
         namesearch = request.values.get("name").title()
     if request.values.get("vintage") == "":
@@ -335,7 +335,7 @@ def search():
     return render_template("index.html", results=mongo.db.wines.find( 
                                             {"$and": 
                                             [ 
-                                            {"$text": {"$search": namesearch}}, 
+                                            {"$text": {"$search": '\"' + namesearch + '\"'}}, 
                                             {"vintage": vintagesearch}, 
                                             {"colour": coloursearch}, 
                                             {"country": countrysearch}, 
