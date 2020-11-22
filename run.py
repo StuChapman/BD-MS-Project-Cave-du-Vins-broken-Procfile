@@ -304,9 +304,9 @@ def populate_search():
 def search():
      # Credit: https://stackoverflow.com/questions/55617412/how-to-perform-wildcard-searches-mongodb-in-python-with-pymongo
     if request.values.get("name") == "":
-        namesearch = ".*a.*"
+        namesearch = ".*.*"
     else:
-        namesearch = request.values.get("name").title()
+        namesearch = request.values.get("name")
     if request.values.get("vintage") == "":
         vintagesearch = {'$regex': '.*'}
     else:
@@ -335,7 +335,7 @@ def search():
     return render_template("index.html", results=mongo.db.wines.find( 
                                             {"$and": 
                                             [ 
-                                            {"$text": {"$search": '/.*' + '\"' + namesearch + '\"' + '.*/'}}, 
+                                            {'wine_name': {'$regex': '.*' + namesearch + '.*'}}, 
                                             {"vintage": vintagesearch}, 
                                             {"colour": coloursearch}, 
                                             {"country": countrysearch}, 
