@@ -361,7 +361,8 @@ def search():
                                             {"vintage": vintagesearch}, 
                                             {"colour": coloursearch}, 
                                             {"country": countrysearch}, 
-                                            {"region": regionsearch} 
+                                            {"region": regionsearch}, 
+                                            {"grape": grapesearch}  
                                             ] }), 
                                             user_name = user_return, 
                                             colours=mongo.db.colours.find(), 
