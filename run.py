@@ -123,6 +123,16 @@ def add_wine_page():
                             )
 
 
+# Refresh Add Wine Form route
+@app.route('/populate_form')
+def populate_form():
+    return render_template("add_wine.html", user_name = 'User: ' + session['username'], 
+                                            colours=mongo.db.colours.find(), 
+                                            country=mongo.db.country.find(), 
+                                            region=mongo.db.region.find(), 
+                                            grape=mongo.db.grape.find())
+
+
 @app.route('/add_wine', methods=["GET", "POST"])
 def add_wine():
     nameadd = request.values.get("name")
@@ -263,15 +273,6 @@ def delete_category(category_id):
                                 category_id="grape", 
                                 delete=mongo.db.grape.delete_one( {'grape': category}))
 
-# Refresh Search Form route
-@app.route('/populate_form')
-def populate_form():
-    return render_template("add_wine.html", user_name = 'User: ' + session['username'], 
-                                            colours=mongo.db.colours.find(), 
-                                            country=mongo.db.country.find(), 
-                                            region=mongo.db.region.find(), 
-                                            grape=mongo.db.grape.find())
-
 
 # Browse Wines routes
 @app.route('/search_page')
@@ -353,7 +354,10 @@ def search():
     return render_template("index.html", results=mongo.db.wines.find( 
                                             {"$and": 
                                             [ 
-                                            {'wine_name': {'$regex': '.*' + namesearch + '.*'}}, # Credit: https://stackoverflow.com/questions/55617412/how-to-perform-wildcard-searches-mongodb-in-python-with-pymongo
+                                            {"$or": 
+                                            [
+                                                {'wine_name': {'$regex': '.*' + namesearch + '.*'}}, # Credit: https://stackoverflow.com/questions/55617412/how-to-perform-wildcard-searches-mongodb-in-python-with-pymongo
+                                                {'wine_name': {'$regex': '.*' + namesearch.title() + '.*'}}]},
                                             {"vintage": vintagesearch}, 
                                             {"colour": coloursearch}, 
                                             {"country": countrysearch}, 
