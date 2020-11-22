@@ -305,37 +305,55 @@ def search():
      # Credit: https://stackoverflow.com/questions/55617412/how-to-perform-wildcard-searches-mongodb-in-python-with-pymongo
     if request.values.get("name") == "":
         namesearch = ".*.*"
+        resultname = ""
     else:
         namesearch = request.values.get("name")
+        resultname = namesearch
+
     if request.values.get("vintage") == "":
         vintagesearch = {'$regex': '.*'}
+        resultvintage = ""
     else:
         vintagesearch = request.values.get("vintage")
+        resultvintage = ' ' + vintagesearch
+
     if request.values.get("colour") == "":
         coloursearch = {'$regex': '.*'}
+        resultcolour = ""
     else:
         coloursearch = request.values.get("colour")
+        resultcolour = ' ' + coloursearch
+
     if request.values.get("country") == "":
         countrysearch = {'$regex': '.*'}
+        resultcountry = ""
     else:
         countrysearch = request.values.get("country")
+        resultcountry = ' ' + countrysearch
+
     if request.values.get("region") == "":
         regionsearch = {'$regex': '.*'}
+        resultregion = ""
     else:
         regionsearch = request.values.get("region")
+        resultregion = ' ' + regionsearch
+
     if request.values.get("grape") == "":
         grapesearch = {'$regex': '.*'}
+        resultgrape = ""
     else:
         grapesearch = request.values.get("grape")
+        resultgrape = ' ' + grapesearch
 
     if 'username' in session:
         user_return = 'User: ' + session['username']
     else:
         user_return = 'Cave du Vins'
+
     return render_template("index.html", results=mongo.db.wines.find( 
                                             {"$and": 
                                             [ 
-                                            {'wine_name': {'$regex': '.*' + namesearch + '.*'}}, 
+                                            {'wine_name': {'$regex': '.*' + namesearch + '.*'}}, # Credit: https://stackoverflow.com/questions/55617412/how-to-perform-wildcard-searches-mongodb-in-python-with-pymongo
                                             {"vintage": vintagesearch}, 
                                             {"colour": coloursearch}, 
                                             {"country": countrysearch}, 
@@ -345,7 +363,13 @@ def search():
                                             colours=mongo.db.colours.find(), 
                                             country=mongo.db.country.find(), 
                                             region=mongo.db.region.find(), 
-                                            grape=mongo.db.grape.find()
+                                            grape=mongo.db.grape.find(),
+                                            results_string = resultname 
+                                                + resultvintage 
+                                                + resultcolour 
+                                                + resultcountry 
+                                                + resultregion 
+                                                + resultgrape
                                         )
 
 

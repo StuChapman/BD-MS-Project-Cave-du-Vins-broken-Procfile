@@ -128,6 +128,10 @@ header.hero .hero-content .hero-subheading {
     opacity: .6;
 }
 
+.resultsgrey {
+    color: silver;
+}
+
 /* Category.html styling */
 .deleteitem {
     width: 50vw;

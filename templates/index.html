@@ -103,11 +103,11 @@
     <section id="results">
         <div class="container text-center mt-5 pt-5">
             {% if results %}
-                <h3>results</h3>
+                <h3>results for: <span class="resultsgrey"><i>{{ results_string }}</i></span></h3>
                 <br>
                 {% for document in results %}
                 <div>
-                    <h1>{{ document.wine_name }}</h1>
+                    <h1>{{ document.wine_name.title() }}</h1>
                     <h3>{{ document.vintage }}</h3>
                     <h3>{{ document.colour }}</h3>
                     <h3>{{ document.country }}</h3>
