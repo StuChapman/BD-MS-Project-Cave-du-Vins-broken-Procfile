@@ -104,7 +104,7 @@
     <section id="results">
         <div class="container text-center mt-5 pt-5">
             {% if results %}
-                <h3>results for <span class="resultsgrey"><i>{{ results_string }}</i></span><br><br>{{ results.count() }} found</h3>
+                <h3>results for <span class="resultsgrey"><i>{{ results_string }}</i></span><br><br>{{ results.count() }} found...</h3>
                 <br>
                 {% for document in results %}
                 <div>
