@@ -138,6 +138,10 @@ header.hero .hero-content .hero-subheading {
     height: 2rem;
 }
 
+.flashmessage {
+    width: 90vw;
+}
+
 /* Large Media Device styling */
 @media (min-width: 992px) {
     .search {
@@ -152,11 +156,13 @@ header.hero .hero-content .hero-subheading {
     font-size: 4rem;
     }
 
-    .deleteflash {
-        width: 34vw;
-    }
-
     .deleteitem {
         width: 20vw;
     }
+
+
+    .flashmessage {
+        width: 34vw;
+    }
+
 }

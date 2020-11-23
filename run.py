@@ -141,6 +141,7 @@ def add_wine():
     countryadd = request.values.get("country")
     regionadd = request.values.get("region")
     grapeadd = request.values.get("grape")
+    flash("The wine has been added") # Credit: https://pythonprogramming.net/flash-flask-tutorial/
     return render_template("add_wine.html", 
                             user_name = 'User: ' + session['username'], 
                             insert=mongo.db.wines.insert_one( 
@@ -173,6 +174,7 @@ def delete_wine(wine_id):
 def add_country():
     countryadd = request.values.get("addcountry")
     existing_country = mongo.db.country.find_one({'country': countryadd})
+    flash(countryadd + " has been added") # Credit: https://pythonprogramming.net/flash-flask-tutorial/
     if existing_country is None:
         return render_template("add_wine.html", 
             user_name = 'User: ' + session['username'], 
@@ -196,6 +198,7 @@ def add_country():
 def add_region():
     regionadd = request.values.get("addregion")
     existing_region = mongo.db.region.find_one({'region': regionadd})
+    flash(regionadd + " has been added") # Credit: https://pythonprogramming.net/flash-flask-tutorial/
     if existing_region is None:
         return render_template("add_wine.html", 
             user_name = 'User: ' + session['username'], 
@@ -219,6 +222,7 @@ def add_region():
 def add_grape():
     grapeadd = request.values.get("addgrape")
     existing_grape = mongo.db.grape.find_one({'grape': grapeadd})
+    flash(grapeadd + " has been added") # Credit: https://pythonprogramming.net/flash-flask-tutorial/
     if existing_grape is None:
         return render_template("add_wine.html", 
         user_name = 'User: ' + session['username'], 
@@ -253,7 +257,7 @@ def delete_category_page(category_id):
 @app.route('/delete_category/<category_id>', methods=["GET", "POST"])
 def delete_category(category_id):
     category = request.values.get("category")
-    flash("The " + category_id + " has been deleted") # Credit: https://pythonprogramming.net/flash-flask-tutorial/
+    flash(category + " has been deleted") # Credit: https://pythonprogramming.net/flash-flask-tutorial/
     if category_id == "country":
         return render_template('categories.html',
                                 user_name = 'User: ' + session['username'], 
@@ -309,42 +313,42 @@ def search():
         resultname = ""
     else:
         namesearch = request.values.get("name")
-        resultname = namesearch
+        resultname = ' - ' + namesearch
 
     if request.values.get("vintage") == "":
         vintagesearch = {'$regex': '.*'}
         resultvintage = ""
     else:
         vintagesearch = request.values.get("vintage")
-        resultvintage = ' ' + vintagesearch
+        resultvintage = ' - ' + vintagesearch
 
     if request.values.get("colour") == "":
         coloursearch = {'$regex': '.*'}
         resultcolour = ""
     else:
         coloursearch = request.values.get("colour")
-        resultcolour = ' ' + coloursearch
+        resultcolour = ' - ' + coloursearch
 
     if request.values.get("country") == "":
         countrysearch = {'$regex': '.*'}
         resultcountry = ""
     else:
         countrysearch = request.values.get("country")
-        resultcountry = ' ' + countrysearch
+        resultcountry = ' - ' + countrysearch
 
     if request.values.get("region") == "":
         regionsearch = {'$regex': '.*'}
         resultregion = ""
     else:
         regionsearch = request.values.get("region")
-        resultregion = ' ' + regionsearch
+        resultregion = ' - ' + regionsearch
 
     if request.values.get("grape") == "":
         grapesearch = {'$regex': '.*'}
         resultgrape = ""
     else:
         grapesearch = request.values.get("grape")
-        resultgrape = ' ' + grapesearch
+        resultgrape = ' - ' + grapesearch
 
     if 'username' in session:
         user_return = 'User: ' + session['username']
