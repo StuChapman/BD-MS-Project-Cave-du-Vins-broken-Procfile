@@ -355,6 +355,16 @@ def search():
     else:
         user_return = 'Cave du Vins'
 
+    results_string = resultname + resultvintage + resultcolour + resultcountry + resultregion + resultgrape
+    
+    if results_string == "":
+        return render_template("index.html", 
+                                user_name = user_return, 
+                                colours=mongo.db.colours.find(), 
+                                country=mongo.db.country.find(), 
+                                region=mongo.db.region.find(), 
+                                grape=mongo.db.grape.find(),
+                            )
     return render_template("index.html", results=mongo.db.wines.find( 
                                             {"$and": 
                                             [ 
