@@ -37,20 +37,26 @@
                     <div>
                         <label for="name">Wine Name</label>
                         <br>
-                        <input type="text" name="name" id="name" minlength="1" class="searchitem">
+                        <input type="text" name="name" id="name" minlength="1" class="searchitem" value="{{ results_winename }}">
                     </div>
                     <div class="searchvintage">
                         <label for="vintage">Vintage</label>
                         <br>
-                        <input type="text" name="vintage" id="vintage" minlength="4" maxlength="4" class="searchitem">
+                        <input type="text" name="vintage" id="vintage" minlength="4" maxlength="4" class="searchitem" value="{{ results_vintage }}">
                     </div>
                     <div class="searchcolour">
                         <label for="colour">Colour</label>
                         <br>
                         <select name="colour" id="colour" class="searchitem">
-                            <option value=""></option>
+                            {% if results_colour == "" %}
+                                <option value="{{ results_colour }}"></option>
+                            {% endif %}
                             {% for document in colours %}
-                                <option value="{{ document.colour }}">{{ document.colour }}</option>
+                                {% if document.colour == results_colour %}
+                                    <option value="{{ results_colour }}" selected>{{ results_colour }}</option>
+                                {% else %}
+                                    <option value="{{ document.colour }}">{{ document.colour }}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
                     </div>
@@ -58,9 +64,15 @@
                         <label for="country">Country</label>
                         <br>
                         <select name="country" id="country" class="searchitem">
-                            <option value=""></option>
+                            {% if results_country == "" %}
+                                <option value="{{ results_country }}"></option>
+                            {% endif %}
                             {% for document in country %}
-                                <option value="{{ document.country }}">{{ document.country }}</option>
+                                {% if document.country == results_country %}
+                                    <option value="{{ results_country }}" selected>{{ results_country }}</option>
+                                {% else %}
+                                    <option value="{{ document.country }}">{{ document.country }}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
                     </div>
@@ -68,9 +80,15 @@
                         <label for="region">Region</label>
                         <br>
                         <select name="region" id="region" class="searchitem">
-                            <option value=""></option>
+                            {% if results_region == "" %}
+                                <option value="{{ results_region }}"></option>
+                            {% endif %}
                             {% for document in region %}
-                                <option value="{{ document.region }}">{{ document.region }}</option>
+                                {% if document.region == results_region %}
+                                    <option value="{{ results_region }}" selected>{{ results_region }}</option>
+                                {% else %}
+                                    <option value="{{ document.region }}">{{ document.region }}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
                     </div>
@@ -78,9 +96,15 @@
                         <label for="grape">Grape</label>
                         <br>
                         <select name="grape" id="grape" class="searchitem">
-                            <option value=""></option>
+                            {% if results_grape == "" %}
+                                <option value="{{ results_grape }}"></option>
+                            {% endif %}
                             {% for document in grape %}
-                                <option value="{{ document.grape }}">{{ document.grape }}</option>
+                                {% if document.grape == results_grape %}
+                                    <option value="{{ results_grape }}" selected>{{ results_grape }}</option>
+                                {% else %}
+                                    <option value="{{ document.grape }}">{{ document.grape }}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
                     </div>
@@ -104,7 +128,18 @@
     <section id="results">
         <div class="container text-center mt-5 pt-5">
             {% if results %}
-                <h3>results for <span class="resultsgrey"><i>{{ results_string }}</i></span><br><br>{{ results.count() }} found...</h3>
+                <h3>results for <span class="resultsgrey">
+                    <em>
+                        {{ results_winename }} 
+                        {{ results_vintage }} 
+                        {{ results_colour }} 
+                        {{ results_country }} 
+                        {{ results_region }} 
+                        {{ results_grape }} 
+                    </em></span>
+                    <br><br>
+                    {{ results.count() }} found...
+                </h3>
                 <br>
                 {% for document in results %}
                 <div>

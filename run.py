@@ -336,7 +336,14 @@ def populate_search():
                            colours=mongo.db.colours.find(),
                            country=mongo.db.country.find(),
                            region=mongo.db.region.find(),
-                           grape=mongo.db.grape.find())
+                           grape=mongo.db.grape.find(),
+                           results_winename="",
+                           results_vintage="",
+                           results_colour="",
+                           results_country="",
+                           results_region="",
+                           results_grape=""
+                           )
 
 
 @app.route("/search", methods=["GET", "POST"])
@@ -348,42 +355,42 @@ def search():
         resultname = ""
     else:
         namesearch = request.values.get("name")
-        resultname = ' - ' + namesearch
+        resultname = namesearch
 
     if request.values.get("vintage") == "":
         vintagesearch = {'$regex': '.*'}
         resultvintage = ""
     else:
         vintagesearch = request.values.get("vintage")
-        resultvintage = ' - ' + vintagesearch
+        resultvintage = vintagesearch
 
     if request.values.get("colour") == "":
         coloursearch = {'$regex': '.*'}
         resultcolour = ""
     else:
         coloursearch = request.values.get("colour")
-        resultcolour = ' - ' + coloursearch
+        resultcolour = coloursearch
 
     if request.values.get("country") == "":
         countrysearch = {'$regex': '.*'}
         resultcountry = ""
     else:
         countrysearch = request.values.get("country")
-        resultcountry = ' - ' + countrysearch
+        resultcountry = countrysearch
 
     if request.values.get("region") == "":
         regionsearch = {'$regex': '.*'}
         resultregion = ""
     else:
         regionsearch = request.values.get("region")
-        resultregion = ' - ' + regionsearch
+        resultregion = regionsearch
 
     if request.values.get("grape") == "":
         grapesearch = {'$regex': '.*'}
         resultgrape = ""
     else:
         grapesearch = request.values.get("grape")
-        resultgrape = ' - ' + grapesearch
+        resultgrape = grapesearch
 
     if 'username' in session:
         user_return = 'User: ' + session['username']
@@ -399,6 +406,12 @@ def search():
                                country=mongo.db.country.find(),
                                region=mongo.db.region.find(),
                                grape=mongo.db.grape.find(),
+                               results_winename=resultname,
+                               results_vintage=resultvintage,
+                               results_colour=resultcolour,
+                               results_country=resultcountry,
+                               results_region=resultregion,
+                               results_grape=resultgrape
                                )
     return render_template("index.html",
                            results=mongo.db.wines.find(
@@ -419,12 +432,12 @@ def search():
                            country=mongo.db.country.find(),
                            region=mongo.db.region.find(),
                            grape=mongo.db.grape.find(),
-                           results_string=resultname +
-                                          resultvintage +
-                                          resultcolour +
-                                          resultcountry +
-                                          resultregion +
-                                          resultgrape
+                           results_winename=resultname,
+                           results_vintage=resultvintage,
+                           results_colour=resultcolour,
+                           results_country=resultcountry,
+                           results_region=resultregion,
+                           results_grape=resultgrape
                            )
 
 
