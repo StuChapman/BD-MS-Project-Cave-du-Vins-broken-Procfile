@@ -28,7 +28,13 @@ def index():
                            colours=mongo.db.colours.find(),
                            country=mongo.db.country.find(),
                            region=mongo.db.region.find(),
-                           grape=mongo.db.grape.find()
+                           grape=mongo.db.grape.find(),
+                           results_winename="",
+                           results_vintage="",
+                           results_colour="",
+                           results_country="",
+                           results_region="",
+                           results_grape=""
                            )
 
 
@@ -75,51 +81,35 @@ def register():
         users = mongo.db.users
         existing_user = users.find_one({'name': request.form['username']})
 
-        SpecialSym = ['$', '@', '#', '%', '!']
+        SpecialSym =['$', '@', '#', '%', '!']
 
         userVal = request.form['username']
 
-# Credit: https://stackoverflow.com/questions/15580917/
-# python-data-validation-using-regular-expression
-    if re.match("^[a-zA-Z0-9*]+$", userVal):
-        passVal = request.form['pass']
-        # Credit: https://www.geeksforgeeks.org/
-        # password-validation-in-python/
-        # #:~:text=Conditions%20for%20a%20valid%20password%20are%3A%201%20
-        # Should,be%20between%206%20to%2020%20characters%20long.%20
-        if len(passVal) < 6:
-            return render_template("register.html",
-                register_error='password should be at least 6 characters')
-        if len(passVal) > 10:
-            return render_template("register.html",
-                register_error='password should be no more than 10 characters')
-        if not any(char.isdigit() for char in passVal):
-            return render_template("register.html",
-                register_error='password should have at least one numeral')
-        if not any(char.isupper() for char in passVal):
-            return render_template("register.html",
-                register_error='password should have at least one uppercase letter')
-        if not any(char.islower() for char in passVal):
-            return render_template("register.html",
-                register_error='password should have at least one lowercase letter')
-        if not any(char in SpecialSym for char in passVal):
-            return render_template("register.html",
-                register_error='password should have at least one of the symbols $, @, #, % or !')
-        else:
-            if existing_user is None:
-                hashpass = bcrypt.hashpw(request.form['pass'].encode('utf-8'),
-                           bcrypt.gensalt())
-                users.insert({'name': request.form['username'],
-                             'password': hashpass})
-                session['username'] = request.form['username']
-                return redirect(url_for('index'))
-
-                return render_template("register.html",
-                                       register_error='That username already exists')
-
+        if re.match("^[a-zA-Z0-9*]+$", userVal): # Credit: https://stackoverflow.com/questions/15580917/python-data-validation-using-regular-expression
+            passVal = request.form['pass']
+            # Credit: https://www.geeksforgeeks.org/password-validation-in-python/#:~:text=Conditions%20for%20a%20valid%20password%20are%3A%201%20Should,be%20between%206%20to%2020%20characters%20long.%20
+            if len(passVal) < 6: 
+                return render_template("register.html", register_error = 'password should be at least 6 characters')
+            if len(passVal) > 10: 
+                return render_template("register.html", register_error = 'password should be no more than 10 characters')
+            if not any(char.isdigit() for char in passVal): 
+                return render_template("register.html", register_error = 'password should have at least one numeral')
+            if not any(char.isupper() for char in passVal):
+                return render_template("register.html", register_error = 'password should have at least one uppercase letter')
+            if not any(char.islower() for char in passVal):
+                return render_template("register.html", register_error = 'password should have at least one lowercase letter')
+            if not any(char in SpecialSym for char in passVal):
+                return render_template("register.html", register_error = 'password should have at least one of the symbols $, @, #, % or !')
             else:
-                return render_template("register.html",
-                                       register_error='Please enter a valid username of text and numbers, with no spaces')
+                if existing_user is None:
+                    hashpass = bcrypt.hashpw(request.form['pass'].encode('utf-8'), bcrypt.gensalt())
+                    users.insert({'name' : request.form['username'], 'password' : hashpass})
+                    session['username'] = request.form['username']
+                    return redirect(url_for('index'))
+                return render_template("register.html", register_error = 'That username already exists')
+        else:
+            return render_template("register.html", register_error = 'Please enter a valid username of text and numbers, with no spaces')
+
 
     if 'username' in session:
         user_return = 'User: ' + session['username']
@@ -322,7 +312,14 @@ def search_page():
                            colours=mongo.db.colours.find(),
                            country=mongo.db.country.find(),
                            region=mongo.db.region.find(),
-                           grape=mongo.db.grape.find())
+                           grape=mongo.db.grape.find(),
+                           results_winename="",
+                           results_vintage="",
+                           results_colour="",
+                           results_country="",
+                           results_region="",
+                           results_grape=""
+                           )
 
 
 @app.route('/populate_search')
