@@ -159,6 +159,15 @@
                                 Add/Update Tasting Note
                             </p>
                         </div>
+                        <div class="row">
+                            <a class="btn btn-yellow btn-xxsmall rounded-pill ml-auto mr-1"
+                                href="{{ url_for('add_tasting_note_page', wine_id=document._id) }}">
+                                <i class="fa fa-camera"></i>
+                            </a>
+                            <p class="ml-1 mr-auto">
+                                Upload image
+                            </p>
+                        </div>
                     {% endif %}
                     {% if user_name == 'User: admin' %}
                         <div class="row">
@@ -173,7 +182,7 @@
                     {% endif %}
                     <div class="row">
                         <a class="btn btn-silver btn-xxsmall rounded-pill ml-auto mr-1"
-                            href="https://www.wine-searcher.com/find/{{ document.wine_name }}+{{ document.vintage }}/{{ document.vintage }}/uk" target="_blank">
+                            href="https://www.wine-searcher.com/find/{{ document.wine_name }}+{{ document.vintage }}/{{ document.vintage }}" target="_blank">
                             <i class="fas fa-shopping-cart"></i>
                         </a>
                         <p class="ml-1 mr-auto">
