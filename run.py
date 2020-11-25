@@ -462,6 +462,12 @@ def add_tasting_note():
         country=mongo.db.country.find(),
         region=mongo.db.region.find(),
         grape=mongo.db.grape.find(),
+        results_winename="",
+        results_vintage="",
+        results_colour="",
+        results_country="",
+        results_region="",
+        results_grape="",
         update=mongo.db.wines.update({'_id': ObjectId(wineid)},
             # Credit: https://stackoverflow.com/questions/10290621/
             # how-do-i-partially-update-an-object-in-mongodb-so-the-new-

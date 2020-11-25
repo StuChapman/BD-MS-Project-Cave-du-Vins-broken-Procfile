@@ -8,6 +8,10 @@
     background-color: #2E9693;
 }
 
+.btn-silver {
+    background-color: silver;
+}
+
 .btn-large {
     width: 15rem;
 }
