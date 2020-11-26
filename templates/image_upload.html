@@ -1,0 +1,23 @@
+<!-- Credit: https://edubanq.com/programming/mongodb/creating-a-user-login-system-using-python-flask-and-mongodb/ -->
+
+{% extends "layout.html" %}
+{% block body %}
+
+    <!-- Header -->
+    <header class="hero text-center">
+        <div class="hero-content">
+            <div class="container filedialogcontainer">
+                <form method="POST" action="{{ url_for('upload_image', wine_id=wine._id) }}">
+                    <div class="row ml-auto mr-auto">
+                        <label for="imageid">Select an image to upload...</label>
+                        <input id="imageid" type="file" class="filedialog" value="fileupload">
+                    </div>
+                    <button type="submit" class="btn btn-yellow mt-2">Upload</button>
+                </form>
+                <div>{{ wine._id }}</div>
+                <br>
+            </div>
+        </div>
+    </header>
+
+{% endblock %}

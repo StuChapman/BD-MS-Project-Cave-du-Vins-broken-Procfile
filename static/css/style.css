@@ -53,6 +53,10 @@ a {
     width: 4rem;
 }
 
+.flashmessage {
+    width: 90vw;
+}
+
 /* Login Page Styling */
 .loginform {
     width: 18rem;
@@ -142,8 +146,14 @@ header.hero .hero-content .hero-subheading {
     height: 2rem;
 }
 
-.flashmessage {
-    width: 90vw;
+/* Upload Image styling */
+.filedialogcontainer {
+    width: 20rem;
+}
+
+.filedialog {
+    background-color: white;
+    width: 100%;
 }
 
 /* Large Media Device styling */

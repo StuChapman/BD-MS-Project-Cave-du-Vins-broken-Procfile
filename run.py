@@ -478,16 +478,24 @@ def add_tasting_note():
 
 
 # Upload Image
-@app.route('/upload_image/<wine_id>')
+@app.route('/upload_image_page/<wine_id>')
+def upload_image_page(wine_id):
+    the_wine = mongo.db.wines.find_one({"_id": ObjectId(wine_id)})
+    return render_template('image_upload.html',
+                           wine=the_wine,
+                           user_name='User: ' + session['username']
+                           )
+
+# Upload Image
+@app.route('/upload_image/<wine_id>', methods=["GET", "POST"])
 def upload_image(wine_id):
-    print("Azure Blob storage v" + __version__ + " - Python quickstart sample")
+    image_id = request.values.get("imageid")
     # Retrieve the connection string for use with the application. The storage
     # connection string is stored in an environment variable on the machine
     # running the application called AZURE_STORAGE_CONNECTION_STRING. If the environment variable is
     # created after the application is launched in a console or with Visual Studio,
     # the shell or application needs to be closed and reloaded to take the
     # environment variable into account.
-    
     connect_str = os.getenv('AZURE_STORAGE_CONNECTION_STRING')
 
     # Create the BlobServiceClient object which will be used to create a container client
@@ -501,10 +509,10 @@ def upload_image(wine_id):
 
     # Open a File Box
 
-    # Create a file in local data directory to upload and download
-    local_path = "./data"
-    local_file_name = "wine.jpg"
-    upload_file_path = os.path.join(local_path, local_file_name)
+    # Get the file to upload
+    local_path = "C:/Users/Owner/Desktop/FSD/10-1Backend_Development_Milestone_Project/images"
+    local_file_name = "2020-09-09 19.39.50.jpg"
+    upload_file_path = image_id
 
     # Create a blob client using the local file name as the name for the blob
     blob_client = blob_service_client.get_blob_client(container=container_name, blob=local_file_name)
@@ -512,21 +520,6 @@ def upload_image(wine_id):
     # Upload the created file
     with open(upload_file_path, "rb") as data:
         blob_client.upload_blob(data)
-
-    print("\nListing blobs...")
-
-    # List the blobs in the container
-    blob_list = container_client.list_blobs()
-    for blob in blob_list:
-        print("\t" + blob.name)
-
-    # Download the blob to a local file
-    # Add 'DOWNLOAD' before the .txt extension so you can see both files in the data directory
-    download_file_path = os.path.join(local_path, str.replace(local_file_name ,'.txt', 'DOWNLOAD.txt'))
-    print("\nDownloading blob to \n\t" + download_file_path)
-
-    with open(download_file_path, "wb") as download_file:
-        download_file.write(blob_client.download_blob().readall())
 
     flash("Image uploaded")
     return redirect(url_for('index'))
