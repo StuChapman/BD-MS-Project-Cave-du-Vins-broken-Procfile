@@ -6,6 +6,8 @@ import bcrypt
 import re
 import uuid
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, __version__
+from werkzeug.utils import secure_filename
+import urllib.request
 
 if os.path.exists("env.py"):
     import env
@@ -489,7 +491,9 @@ def upload_image_page(wine_id):
 # Upload Image
 @app.route('/upload_image/<wine_id>', methods=["GET", "POST"])
 def upload_image(wine_id):
-    image_id = request.values.get("imageid")
+    # Credit: https://www.tutorialspoint.com/file-upload-example-in-python
+    file = request.files['filename']
+
     # Retrieve the connection string for use with the application. The storage
     # connection string is stored in an environment variable on the machine
     # running the application called AZURE_STORAGE_CONNECTION_STRING. If the environment variable is
@@ -507,18 +511,14 @@ def upload_image(wine_id):
     # Create the container
     container_client = blob_service_client.create_container(container_name)
 
-    # Open a File Box
-
     # Get the file to upload
-    local_path = "C:/Users/Owner/Desktop/FSD/10-1Backend_Development_Milestone_Project/images"
-    local_file_name = "2020-09-09 19.39.50.jpg"
-    upload_file_path = image_id
+    file_path = secure_filename(file.filename)
 
     # Create a blob client using the local file name as the name for the blob
-    blob_client = blob_service_client.get_blob_client(container=container_name, blob=local_file_name)
+    blob_client = blob_service_client.get_blob_client(container=container_name, blob=file)
 
     # Upload the created file
-    with open(upload_file_path, "rb") as data:
+    with open(file_path, "rb") as data:
         blob_client.upload_blob(data)
 
     flash("Image uploaded")
