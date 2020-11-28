@@ -7,7 +7,7 @@
         <div class="hero-content">
             <div class="container">
                 <div>
-                    <h3>Select the  {{ category_id }} from the list below to delete...</h3>
+                    <h3>Select the {{ category_id }} from the list below to delete...</h3>
                 </div>
                 <br>
                 <form method="POST" action="{{ url_for('delete_category', category_id=category_id) }}">

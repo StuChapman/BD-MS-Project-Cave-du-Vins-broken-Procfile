@@ -151,11 +151,35 @@ def populate_form():
 @app.route('/add_wine', methods=["GET", "POST"])
 def add_wine():
     nameadd = request.values.get("name")
+    if not any(char.islower() for char in nameadd):
+        flash('wine name must be populated')
+        return render_template("add_wine.html",
+                               user_name='User: ' + session['username'],
+                               colours=mongo.db.colours.find(),
+                               country=mongo.db.country.find(),
+                               region=mongo.db.region.find(),
+                               grape=mongo.db.grape.find())
     vintageadd = request.values.get("vintage")
+    if not all(char.isdigit() for char in vintageadd):
+        flash('vintage must be 4 numerals')
+        return render_template("add_wine.html",
+                               user_name='User: ' + session['username'],
+                               colours=mongo.db.colours.find(),
+                               country=mongo.db.country.find(),
+                               region=mongo.db.region.find(),
+                               grape=mongo.db.grape.find())
     colouradd = request.values.get("colour")
     countryadd = request.values.get("country")
     regionadd = request.values.get("region")
     grapeadd = request.values.get("grape")
+    if nameadd == "" or vintageadd == "":
+        flash('all fields must be populated')
+        return render_template("add_wine.html",
+                           user_name='User: ' + session['username'],
+                           colours=mongo.db.colours.find(),
+                           country=mongo.db.country.find(),
+                           region=mongo.db.region.find(),
+                           grape=mongo.db.grape.find())
 
     # Credit: https://pythonprogramming.net/flash-flask-tutorial/
     flash("The wine has been added")
@@ -191,6 +215,13 @@ def delete_wine(wine_id):
 def add_country():
     countryadd = request.values.get("addcountry")
     existing_country = mongo.db.country.find_one({'country': countryadd})
+    if not any(char.islower() for char in countryadd):
+        flash('country must be populated')
+        return render_template("add_wine.html",
+                               user_name='User: ' + session['username'],
+                               country=mongo.db.country.find(),
+                               region=mongo.db.region.find(),
+                               grape=mongo.db.grape.find())
 
     # Credit: https://pythonprogramming.net/flash-flask-tutorial/
     flash(countryadd + " has been added")
@@ -217,6 +248,13 @@ def add_country():
 def add_region():
     regionadd = request.values.get("addregion")
     existing_region = mongo.db.region.find_one({'region': regionadd})
+    if not any(char.islower() for char in regionadd):
+        flash('region must be populated')
+        return render_template("add_wine.html",
+                               user_name='User: ' + session['username'],
+                               country=mongo.db.country.find(),
+                               region=mongo.db.region.find(),
+                               grape=mongo.db.grape.find())
 
     # Credit: https://pythonprogramming.net/flash-flask-tutorial/
     flash(regionadd + " has been added")
@@ -243,6 +281,13 @@ def add_region():
 def add_grape():
     grapeadd = request.values.get("addgrape")
     existing_grape = mongo.db.grape.find_one({'grape': grapeadd})
+    if not any(char.islower() for char in grapeadd):
+        flash('grape must be populated')
+        return render_template("add_wine.html",
+                               user_name='User: ' + session['username'],
+                               country=mongo.db.country.find(),
+                               region=mongo.db.region.find(),
+                               grape=mongo.db.grape.find())
 
     # Credit: https://pythonprogramming.net/flash-flask-tutorial/
     flash(grapeadd + " has been added")
@@ -397,12 +442,6 @@ def search():
     else:
         user_return = 'Cave du Vins'
 
-    print("resultname: " + resultname)
-    print("resultvintage: " + resultvintage)
-    print("resultcolour: " + resultcolour)
-    print("resultcountry: " + resultcountry)
-    print("resultregion: " + resultregion)
-    print("resultgrape: " + resultgrape)
     results_string = resultname + resultvintage + resultcolour + resultcountry + resultregion + resultgrape
 
     if results_string == "":
