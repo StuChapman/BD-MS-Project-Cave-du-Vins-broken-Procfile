@@ -5,7 +5,7 @@ from bson.objectid import ObjectId
 import bcrypt
 import re
 import uuid
-from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, __version__
+from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, PublicAccess, __version__
 from azure.core.exceptions import ResourceExistsError
 
 
@@ -398,6 +398,12 @@ def search():
     else:
         user_return = 'Cave du Vins'
 
+    print("resultname: " + resultname)
+    print("resultvintage: " + resultvintage)
+    print("resultcolour: " + resultcolour)
+    print("resultcountry: " + resultcountry)
+    print("resultregion: " + resultregion)
+    print("resultgrape: " + resultgrape)
     results_string = resultname + resultvintage + resultcolour + resultcountry + resultregion + resultgrape
 
     if results_string == "":
@@ -504,7 +510,7 @@ def upload_image(wine_id):
 
     # Get a file from upload_images directory to upload
     local_path = "./upload_images"
-    local_file_name = "wine.jpg"
+    local_file_name = "IMG_4723sml.JPG"
     upload_file_path = os.path.join(local_path, local_file_name)
 
     # Create the BlobServiceClient object which will be used to create a container client
@@ -535,16 +541,8 @@ def upload_image(wine_id):
     with open(upload_file_path, "rb") as data:
         blob_client.upload_blob(data)
 
-    # Download the blob to a local file
-    # Add 'DOWNLOAD' before the .txt extension so you can see both files in the data directory
-    download_file_path = os.path.join(local_path, str.replace(local_file_name ,'.txt', 'DOWNLOAD.txt'))
-    print("\nDownloading blob to \n\t" + download_file_path)
-
-    with open(download_file_path, "wb") as download_file:
-        download_file.write(blob_client.download_blob().readall())
-
     # create a url for the image
-    image_url = "https://mystorageacct180671.blob.core.windows.net/5fa9911f3e6d16164bfe6602/" + local_file_name
+    image_url = "https://mystorageacct180671.blob.core.windows.net/" + container_name + "/" + local_file_name
     wineid = wine_id
 
     flash("Image uploaded")
