@@ -508,8 +508,10 @@ def upload_image(wine_id):
     connect_str = os.getenv('AZURE_STORAGE_CONNECTION_STRING')
 
     # Get a file from upload_images directory to upload
+    file_name = request.values.get("filename")
+    print(file_name)
     local_path = "./upload_images"
-    local_file_name = "IMG_4723sml.JPG"
+    local_file_name = "wine.jpg"
     upload_file_path = os.path.join(local_path, local_file_name)
 
     # Create the BlobServiceClient object which will be used to create a container client
@@ -534,12 +536,30 @@ def upload_image(wine_id):
     wineid = wine_id
 
     flash("Image uploaded")
+
+    if 'username' in session:
+        user_return = 'User: ' + session['username']
+    else:
+        user_return = 'Cave du Vins'
+
     return render_template("index.html", 
-            update=mongo.db.wines.update({'_id': ObjectId(wineid)},
-            # Credit: https://stackoverflow.com/questions/10290621/
-            # how-do-i-partially-update-an-object-in-mongodb-so-the-new-
-            # object-will-overlay
-            {"$set": {'photo_url': image_url}}))
+                           update=mongo.db.wines.update({'_id': ObjectId(wineid)},
+                           # Credit: https://stackoverflow.com/questions/10290621/
+                           # how-do-i-partially-update-an-object-in-mongodb-so-the-new-
+                           # object-will-overlay
+                           {"$set": {'photo_url': image_url}}),
+                           user_name=user_return,
+                           colours=mongo.db.colours.find(),
+                           country=mongo.db.country.find(),
+                           region=mongo.db.region.find(),
+                           grape=mongo.db.grape.find(),
+                           results_winename="",
+                           results_vintage="",
+                           results_colour="",
+                           results_country="",
+                           results_region="",
+                           results_grape=""
+                          )
 
 
 if __name__ == '__main__':
