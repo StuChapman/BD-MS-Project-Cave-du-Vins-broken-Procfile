@@ -5,9 +5,8 @@ from bson.objectid import ObjectId
 import bcrypt
 import re
 import uuid
-from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, PublicAccess, __version__
+from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, __version__
 from azure.core.exceptions import ResourceExistsError
-
 
 if os.path.exists("env.py"):
     import env
@@ -516,33 +515,22 @@ def upload_image(wine_id):
     # Create the BlobServiceClient object which will be used to create a container client
     blob_service_client = BlobServiceClient.from_connection_string(connect_str)
 
-    # Create a unique name for the container
-    container_name = wine_id
+    # Set the name for the container
+    container_name = "caveduvins"
+    container_client = ContainerClient.from_connection_string(conn_str=connect_str, container_name=container_name)
 
-    # Check if container already exists 
-    # Credit: https://stackoverflow.com/questions/59170504/create-blob-container-in-azure-storage-if-it-is-not-exists
-    try:
-        # Create the container
-        container_client = blob_service_client.create_container(container_name)
-
-    # Catch ResourceExistsError
-    except ResourceExistsError as error:
-        # Delete the blob
-        # Credit: https://stackoverflow.com/questions/58900507/upload-and-delete-azure-storage-blob-using-azure-storage-blob-or-azure-storage
-        container_client = ContainerClient.from_connection_string(conn_str=connect_str, container_name=container_name)
-        blob_list = container_client.list_blobs()
-        for blob in blob_list:
-            container_client.delete_blob(blob=blob)
+    # Set the upload file name
+    upload_file_name = wine_id + str(uuid.uuid4()) + ".jpg"
 
     # Create a blob client using the local file name as the name for the blob
-    blob_client = blob_service_client.get_blob_client(container=container_name, blob=local_file_name)
+    blob_client = blob_service_client.get_blob_client(container=container_name, blob=upload_file_name)
 
     # Upload the created file
     with open(upload_file_path, "rb") as data:
         blob_client.upload_blob(data)
 
     # create a url for the image
-    image_url = "https://mystorageacct180671.blob.core.windows.net/" + container_name + "/" + local_file_name
+    image_url = "https://mystorageacct180671.blob.core.windows.net/" + container_name + "/" + upload_file_name
     wineid = wine_id
 
     flash("Image uploaded")
