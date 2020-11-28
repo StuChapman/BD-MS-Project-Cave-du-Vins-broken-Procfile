@@ -7,7 +7,7 @@
     <header class="hero text-center">
         <div class="hero-content">
             <div class="container filedialogcontainer">
-                <form method="POST" action="{{ url_for('upload_image', wine_id=wine._id) }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ url_for('upload_image_test', wine_id=wine._id) }}" enctype="multipart/form-data">
                     <div class="row ml-auto mr-auto">
                         <label for="filename">Select an image to upload...</label>
                         <input name="filename" type="file" class="filedialog">
