@@ -149,6 +149,11 @@
                     <h3>{{ document.country }}</h3>
                     <h3>{{ document.region }}</h3>
                     <p>{{ document.tasting_notes }}</p>
+                    {% if document.photo_url %}
+                        <div>
+                            <img class="img-fluid rounded-circle wine_img" src="{{ document.photo_url }}" alt="wine image">
+                        </div>
+                    {% endif %}
                     {% if user_name != 'Cave du Vins' %}
                         <div class="row">
                             <a class="btn btn-yellow btn-xxsmall rounded-pill ml-auto mr-1"

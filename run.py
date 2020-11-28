@@ -6,8 +6,8 @@ import bcrypt
 import re
 import uuid
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, __version__
-from werkzeug.utils import secure_filename
-import urllib.request
+from azure.core.exceptions import ResourceExistsError
+
 
 if os.path.exists("env.py"):
     import env
@@ -491,8 +491,7 @@ def upload_image_page(wine_id):
 # Upload Image
 @app.route('/upload_image/<wine_id>', methods=["GET", "POST"])
 def upload_image(wine_id):
-    # Credit: https://www.tutorialspoint.com/file-upload-example-in-python
-    file = request.files['filename']
+    # Credit: https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-python
 
     # Retrieve the connection string for use with the application. The storage
     # connection string is stored in an environment variable on the machine
@@ -500,7 +499,13 @@ def upload_image(wine_id):
     # created after the application is launched in a console or with Visual Studio,
     # the shell or application needs to be closed and reloaded to take the
     # environment variable into account.
+
     connect_str = os.getenv('AZURE_STORAGE_CONNECTION_STRING')
+
+    # Get a file from upload_images directory to upload
+    local_path = "./upload_images"
+    local_file_name = "wine.jpg"
+    upload_file_path = os.path.join(local_path, local_file_name)
 
     # Create the BlobServiceClient object which will be used to create a container client
     blob_service_client = BlobServiceClient.from_connection_string(connect_str)
@@ -508,21 +513,47 @@ def upload_image(wine_id):
     # Create a unique name for the container
     container_name = wine_id
 
-    # Create the container
-    container_client = blob_service_client.create_container(container_name)
+    # Check if container already exists 
+    # Credit: https://stackoverflow.com/questions/59170504/create-blob-container-in-azure-storage-if-it-is-not-exists
+    try:
+        # Create the container
+        container_client = blob_service_client.create_container(container_name)
 
-    # Get the file to upload
-    file_path = secure_filename(file.filename)
+    # Catch ResourceExistsError
+    except ResourceExistsError as error:
+        # Delete the blob
+        # Credit: https://stackoverflow.com/questions/58900507/upload-and-delete-azure-storage-blob-using-azure-storage-blob-or-azure-storage
+        container_client = ContainerClient.from_connection_string(conn_str=connect_str, container_name=container_name)
+        blob_list = container_client.list_blobs()
+        for blob in blob_list:
+            container_client.delete_blob(blob=blob)
 
     # Create a blob client using the local file name as the name for the blob
-    blob_client = blob_service_client.get_blob_client(container=container_name, blob=file)
+    blob_client = blob_service_client.get_blob_client(container=container_name, blob=local_file_name)
 
     # Upload the created file
-    with open(file_path, "rb") as data:
+    with open(upload_file_path, "rb") as data:
         blob_client.upload_blob(data)
 
+    # Download the blob to a local file
+    # Add 'DOWNLOAD' before the .txt extension so you can see both files in the data directory
+    download_file_path = os.path.join(local_path, str.replace(local_file_name ,'.txt', 'DOWNLOAD.txt'))
+    print("\nDownloading blob to \n\t" + download_file_path)
+
+    with open(download_file_path, "wb") as download_file:
+        download_file.write(blob_client.download_blob().readall())
+
+    # create a url for the image
+    image_url = "https://mystorageacct180671.blob.core.windows.net/5fa9911f3e6d16164bfe6602/" + local_file_name
+    wineid = wine_id
+
     flash("Image uploaded")
-    return redirect(url_for('index'))
+    return render_template("index.html", 
+            update=mongo.db.wines.update({'_id': ObjectId(wineid)},
+            # Credit: https://stackoverflow.com/questions/10290621/
+            # how-do-i-partially-update-an-object-in-mongodb-so-the-new-
+            # object-will-overlay
+            {"$set": {'photo_url': image_url}}))
 
 
 if __name__ == '__main__':

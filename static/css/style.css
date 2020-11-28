@@ -140,6 +140,11 @@ header.hero .hero-content .hero-subheading {
     color: silver;
 }
 
+.wine_img {
+    height: 10vw;
+    background-size: cover;
+}
+
 /* Category.html styling */
 .deleteitem {
     width: 50vw;
