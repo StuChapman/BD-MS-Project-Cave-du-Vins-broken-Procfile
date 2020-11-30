@@ -12,7 +12,7 @@
                 <br>
                 <form method="POST" action="{{ url_for('add_tasting_note', wine_id=wine._id) }}">
                     <div>
-                        <textarea type="text" class="tastingnote ml-auto mb-1" name="add_tasting_note">{{ wine.tasting_notes }}</textarea>
+                        <textarea type="text" class="tastingnote ml-auto mb-1" maxlength="500" name="add_tasting_note">{{ wine.tasting_notes }}</textarea>
                     </div>
                     <button type="submit" class="btn btn-yellow rounded-pill mt-2">Save</button>
                 </form>

@@ -7,9 +7,6 @@ import re
 import uuid
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, __version__
 from azure.core.exceptions import ResourceExistsError
-#!/usr/bin/python
-import cgi
-import cgitb; cgitb.enable()
 
 if os.path.exists("env.py"):
     import env
@@ -600,31 +597,6 @@ def upload_image(wine_id):
                            results_region="",
                            results_grape=""
                           )
-
-
-# Upload Image Test
-@app.route('/upload_image_test/<wine_id>', methods=["GET", "POST"])
-def upload_image_test(wine_id):
-
-    # form = cgi.FieldStorage()
-    # Get filename here.
-    # fileitem = form['filename']
-
-    file = form("filename")
-    print(file)
-    dirname = os.path.dirname(file)
-
-    print('got the filename')
-    # Test if the file was uploaded
-    if fileitem.filename:
-        # strip leading path from file name to avoid
-        # directory traversal attacks
-        fn = os.path.basename(fileitem.filename)
-        open('/tmp/' + fn, 'wb').write(fileitem.file.read())
-        print('The file "' + fn + '" was uploaded successfully')
-
-    else:
-        print('No file was uploaded')
 
 
 if __name__ == '__main__':

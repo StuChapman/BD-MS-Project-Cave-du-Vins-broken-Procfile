@@ -57,6 +57,10 @@ a {
     width: 90vw;
 }
 
+hr {
+    background-color: #2E9693;
+}
+
 /* Login Page Styling */
 .loginform {
     width: 18rem;
@@ -74,7 +78,6 @@ a {
 .logintext a {
     color: #FFD374;
 }
-
 
 /* Register Page styling */
  .passwordtext {
@@ -182,6 +185,10 @@ header.hero .hero-content .hero-subheading {
 
     .flashmessage {
         width: 34vw;
+    }
+
+    .wine_img {
+        height: 15vw;
     }
 
 }

@@ -142,62 +142,60 @@
                 </h3>
                 <br>
                 {% for document in results %}
-                <div>
-                    <h1>{{ document.wine_name.title() }}</h1>
-                    <h3>{{ document.vintage }}</h3>
-                    <h3>{{ document.colour }}</h3>
-                    <h3>{{ document.country }}</h3>
-                    <h3>{{ document.region }}</h3>
-                    <p>{{ document.tasting_notes }}</p>
-                    {% if document.photo_url %}
-                        <div>
-                            <img class="img-fluid rounded-circle wine_img" src="{{ document.photo_url }}" alt="wine image">
+                    <div class="row ml-md-5 mr-md-5">
+                        <div class="col-md-6">
+                            <h1>{{ document.wine_name.title() }}</h1>
+                            <h3>{{ document.vintage }}</h3>
+                            <h3>{{ document.colour }}</h3>
+                            <h3>{{ document.country }}</h3>
+                            <h3>{{ document.region }}</h3>
+                            <p>{{ document.tasting_notes }}</p>
                         </div>
-                    {% endif %}
-                    {% if user_name != 'Cave du Vins' %}
-                        <div class="row">
-                            <a class="btn btn-yellow btn-xxsmall rounded-pill ml-auto mr-1"
-                                href="{{ url_for('add_tasting_note_page', wine_id=document._id) }}">
-                                <i class="fas fa-plus"></i>
-                            </a>
-                            <p class="ml-1 mr-auto">
-                                Add/Update Tasting Note
-                            </p>
+                        <div class="col-md-6">
+                            {% if document.photo_url %}
+                                <img class="img-fluid rounded-circle wine_img mb-3 mb-md-0" src="{{ document.photo_url }}" alt="wine image">
+                            {% endif %}
+                            <div class="mt-md-5">
+                                {% if user_name != 'Cave du Vins' %}
+                                    <div class="mb-2">
+                                        <a class="btn btn-yellow btn-xxsmall rounded-pill mb-1"
+                                            href="{{ url_for('add_tasting_note_page', wine_id=document._id) }}">
+                                            <i class="fas fa-plus"></i>
+                                        </a>
+                                        Add/Update Tasting Note
+                                    </div>
+                                    <div class="mb-2">
+                                        <a class="btn btn-yellow btn-xxsmall rounded-pill mb-1"
+                                            href="{{ url_for('upload_image_page', wine_id=document._id) }}">
+                                            <i class="fa fa-camera"></i>
+                                        </a>
+                                        Upload image
+                                    </div>
+                                {% endif %}
+                                {% if user_name == 'User: admin' %}
+                                    <div class="mb-2">
+                                        <a class="btn btn-blue btn-xxsmall rounded-pill mb-1"
+                                            href="{{ url_for('delete_wine', wine_id=document._id) }}">
+                                            <i class="fas fa-minus"></i>
+                                        </a>
+                                        Delete Wine
+                                    </div>
+                                {% endif %}
+                                <div class="mb-2">
+                                    <a class="btn btn-silver btn-xxsmall rounded-pill mb-1"
+                                        href="https://www.wine-searcher.com/find/{{ document.wine_name }}+{{ document.vintage }}/{{ document.vintage }}" target="_blank">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </a>
+                                    Buy this Wine
+                                </div>
+                            </div>
                         </div>
-                        <div class="row">
-                            <a class="btn btn-yellow btn-xxsmall rounded-pill ml-auto mr-1"
-                                href="{{ url_for('upload_image_page', wine_id=document._id) }}">
-                                <i class="fa fa-camera"></i>
-                            </a>
-                            <p class="ml-1 mr-auto">
-                                Upload image
-                            </p>
-                        </div>
-                    {% endif %}
-                    {% if user_name == 'User: admin' %}
-                        <div class="row">
-                            <a class="btn btn-blue btn-xxsmall rounded-pill ml-auto mr-1"
-                                href="{{ url_for('delete_wine', wine_id=document._id) }}">
-                                <i class="fas fa-minus"></i>
-                            </a>
-                            <p class="ml-1 mr-auto">
-                                Delete Wine
-                            </p>
-                        </div>
-                    {% endif %}
-                    <div class="row">
-                        <a class="btn btn-silver btn-xxsmall rounded-pill ml-auto mr-1"
-                            href="https://www.wine-searcher.com/find/{{ document.wine_name }}+{{ document.vintage }}/{{ document.vintage }}" target="_blank">
-                            <i class="fas fa-shopping-cart"></i>
-                        </a>
-                        <p class="ml-1 mr-auto">
-                            Buy this Wine
-                        </p>
                     </div>
-                    <br>
-                    <br>
-                    <br>
-                </div>
+                    {% if loop.index != results.count() %}
+                        <hr>
+                    {% else %}
+                        <br>
+                    {% endif %}
                 {% endfor %}
             {% endif %}
         </div>
