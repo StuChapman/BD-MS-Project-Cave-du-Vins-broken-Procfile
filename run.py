@@ -7,6 +7,7 @@ import re
 import uuid
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient, __version__
 from azure.core.exceptions import ResourceExistsError
+from werkzeug.utils import secure_filename
 
 if os.path.exists("env.py"):
     import env
@@ -545,6 +546,14 @@ def upload_image(wine_id):
     # environment variable into account.
 
     connect_str = os.getenv('AZURE_STORAGE_CONNECTION_STRING')
+
+    # Get the user unput image file Credit: https://pythonise.com/series/learning-flask/flask-uploading-files
+    if request.method == "POST":
+        if request.files:
+            uploaded_image = request.files["filename"]
+            fn = secure_filename(uploaded_image.filename)
+            print("uploaded_image")
+            print(uploaded_image)
 
     # Get static file from upload_images directory to upload
     local_path = "./upload_images"
