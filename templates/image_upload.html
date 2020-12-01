@@ -1,4 +1,3 @@
-<!-- Credit: https://edubanq.com/programming/mongodb/creating-a-user-login-system-using-python-flask-and-mongodb/ -->
 
 {% extends "layout.html" %}
 {% block body %}
@@ -6,6 +5,9 @@
     <!-- Header -->
     <header class="hero text-center">
         <div class="hero-content">
+            {% if upload_error %}
+                <h6 class="logintext">{{ upload_error }}</h6>
+            {% endif %}
             <div class="container filedialogcontainer">
                 <form method="POST" action="{{ url_for('upload_image', wine_id=wine._id) }}" enctype="multipart/form-data">
                     <div class="row ml-auto mr-auto">

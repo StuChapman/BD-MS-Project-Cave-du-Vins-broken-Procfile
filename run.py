@@ -16,6 +16,8 @@ app = Flask(__name__)
 
 app.config["MONGO_DBNAME"] = 'CaveDuVin'
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
+app.config["IMAGE_UPLOADS"] = "./upload_images"
+app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
 
 mongo = PyMongo(app)
 
@@ -533,6 +535,17 @@ def upload_image_page(wine_id):
                            user_name='User: ' + session['username']
                            )
 
+# Check For Image Extension
+def allowed_image(filename):
+    if not "." in filename:
+        return False
+    ext = filename.rsplit(".", 1)[1]
+    if ext.upper() in app.config["ALLOWED_IMAGE_EXTENSIONS"]:
+        return True
+    else:
+        return False
+
+
 # Upload Image
 @app.route('/upload_image/<wine_id>', methods=["GET", "POST"])
 def upload_image(wine_id):
@@ -550,14 +563,30 @@ def upload_image(wine_id):
     # Get the user unput image file Credit: https://pythonise.com/series/learning-flask/flask-uploading-files
     if request.method == "POST":
         if request.files:
-            uploaded_image = request.files["filename"]
-            fn = secure_filename(uploaded_image.filename)
-            print("uploaded_image")
-            print(uploaded_image)
+            image = request.files["filename"]
+            if image.filename == "":
+                the_wine = mongo.db.wines.find_one({"_id": ObjectId(wine_id)})
+                return render_template('image_upload.html',
+                                       wine=the_wine,
+                                       upload_error='No image selected',
+                                       user_name='User: ' + session['username']
+                                       )
 
-    # Get static file from upload_images directory to upload
+            if allowed_image(image.filename):
+                filename = secure_filename(image.filename)
+                image.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
+            else:
+                print("That file extension is not allowed")
+                the_wine = mongo.db.wines.find_one({"_id": ObjectId(wine_id)})
+                return render_template('image_upload.html',
+                                       wine=the_wine,
+                                       upload_error='Incorrect file type selected - must be: "JPEG", "JPG", "PNG" or "GIF"',
+                                       user_name='User: ' + session['username']
+                                       )
+
+    # Get static file and save to upload_images directory to upload
     local_path = "./upload_images"
-    local_file_name = "wine.jpg"
+    local_file_name = filename
     upload_file_path = os.path.join(local_path, local_file_name)
 
     # Create the BlobServiceClient object which will be used to create a container client
@@ -576,6 +605,9 @@ def upload_image(wine_id):
     # Upload the created file
     with open(upload_file_path, "rb") as data:
         blob_client.upload_blob(data)
+
+    # Delete the file from upload_images directory
+    os.remove(upload_file_path)
 
     # create a url for the image
     image_url = "https://mystorageacct180671.blob.core.windows.net/" + container_name + "/" + upload_file_name
@@ -604,8 +636,9 @@ def upload_image(wine_id):
                            results_colour="",
                            results_country="",
                            results_region="",
-                           results_grape=""
-                          )
+                           results_grape="",
+                           results=mongo.db.wines.find({'_id': ObjectId(wineid)})
+                           )
 
 
 if __name__ == '__main__':
