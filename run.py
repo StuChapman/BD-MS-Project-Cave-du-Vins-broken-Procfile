@@ -520,10 +520,11 @@ def add_tasting_note():
         results_region="",
         results_grape="",
         update=mongo.db.wines.update({'_id': ObjectId(wineid)},
-            # Credit: https://stackoverflow.com/questions/10290621/
-            # how-do-i-partially-update-an-object-in-mongodb-so-the-new-
-            # object-will-overlay
-            {"$set": {'tasting_notes': tastingnoteadd}}))
+                                     # Credit: https://stackoverflow.com/questions/10290621/
+                                     # how-do-i-partially-update-an-object-in-mongodb-so-the-new-
+                                     # object-will-overlay
+                                     {"$set": {'tasting_notes': tastingnoteadd}}),
+                                     results=mongo.db.wines.find({'_id': ObjectId(wineid)}))
 
 
 # Upload Image
