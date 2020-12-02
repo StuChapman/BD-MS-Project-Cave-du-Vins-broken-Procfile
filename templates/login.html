@@ -6,7 +6,7 @@
     <!-- Header -->
     <header class="hero text-center">
         <div class="hero-content">
-            <div class="container loginform">
+            <div class="container loginform mt-4">
                 <form method="POST" action="{{ url_for('login') }}">
                     {% if password_error %}
                         <h6 class="logintext">{{ password_error }}</h6>

@@ -89,7 +89,6 @@ header.hero {
     position: relative;
     overflow: hidden;
     height: 95vh;
-    padding-top: calc(7rem + 72px);
     padding-bottom: 7rem;
 }
 
@@ -114,10 +113,6 @@ header.hero .hero-content {
   color: rgba(0, 0, 0, 0.8);
 }
 
-header.hero .hero-content .hero-heading {
-  font-size: 15vw;
-}
-
 header.hero .hero-content .hero-subheading {
   font-size: 2rem;
 }
@@ -134,7 +129,7 @@ header.hero .hero-content .hero-subheading {
 
 .tastingnote {
     width: 80vw;
-    height: 8rem;
+    height: 20vh;
     overflow-y: scroll;
     opacity: .6;
 }
@@ -182,13 +177,36 @@ header.hero .hero-content .hero-subheading {
         width: 20vw;
     }
 
-
     .flashmessage {
         width: 34vw;
     }
 
     .wine_img {
         height: 15vw;
+    }
+
+}
+
+@media screen and (orientation: landscape){ /* Credit: https://stackoverflow.com/questions/43589507/how-can-you-have-bootstrap-responsiveness-based-on-screen-ratio-instead-of-scree */
+
+    header.hero {
+        padding-top: 22.5vh;
+    }
+
+    header.hero .hero-content .hero-heading {
+        font-size: 17.5vh;
+    }
+
+}
+
+@media screen and (orientation: portrait){ /* Credit: https://stackoverflow.com/questions/43589507/how-can-you-have-bootstrap-responsiveness-based-on-screen-ratio-instead-of-scree */
+
+    header.hero {
+        padding-top: calc(7rem + 72px);
+    }
+
+    header.hero .hero-content .hero-heading {
+        font-size: 15vw;
     }
 
 }
